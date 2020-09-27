@@ -7,35 +7,24 @@ import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Collapse from "@material-ui/core/Collapse";
 import HomeIcon from "@material-ui/icons/Home";
 import ReceiptIcon from "@material-ui/icons/Receipt";
-import SettingsIcon from "@material-ui/icons/Settings";
 
 import calculateBuffer from './utils/APIConnection'
 
 const items = [
   { name: "solberGis", label: "solberGis", Icon: HomeIcon },
-  {
-      name: "Buffer",
-      label: "Buffer",
-      Icon: ReceiptIcon,
-      items: [
-          { name: "statements", label: "Statements", "onClick": calculateBuffer },
-          { name: "reports", label: "Reports" }
-      ]
-  },
   "divider",
   {
-      name: "settings",
-      label: "Settings",
-      Icon: SettingsIcon,
+      name: "Operations",
+      label: "Operations",
+      Icon: ReceiptIcon,
       items: [
-          { name: "profile", label: "Profile" },
-          { name: "insurance", label: "Insurance" }
+          { name: "Buffer", label: "Buffer", "onClick": calculateBuffer }
       ]
   }
 ];
 
 
-function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
+function SidebarItem({ depthStep = 10, depth = 0, expanded, item, setLayers, ...rest }) {
   const [collapsed, setCollapsed] = useState(true);
   const { label, items, Icon, onClick: onClickProp } = item;
 
@@ -48,7 +37,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
       toggleCollapse();
     }
     if (onClickProp) {
-      onClickProp(e, item);
+      onClickProp(setLayers);
     }
   }
 
@@ -107,24 +96,11 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
   );
 }
 
-function Sidebar({ depthStep, depth, expanded }) {
+const Sidebar = ({setLayers}) => {
   return (
     <div className="sidebar">
       <List disablePadding dense>
-        {items.map((sidebarItem, index) => (
-          <React.Fragment key={`${sidebarItem.name}${index}`}>
-            {sidebarItem === "divider" ? (
-              <Divider style={{ margin: "6px 0" }} />
-            ) : (
-              <SidebarItem
-                depthStep={depthStep}
-                depth={depth}
-                expanded={expanded}
-                item={sidebarItem}
-              />
-            )}
-          </React.Fragment>
-        ))}
+      <ListItem onClick={(calculateBuffer(setLayers))}>Buffer</ListItem>
       </List>
     </div>
   );

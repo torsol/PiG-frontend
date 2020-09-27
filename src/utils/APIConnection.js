@@ -41,16 +41,18 @@ const sampleJson = {
     }
 }
 
-
-function calculateBuffer(e, item) {
-    axios
+function calculateBuffer(setLayers) {
+    return function () {
+        axios
         .post('http://localhost:5000/api/buffer', sampleJson)
         .then(response => {
-            window.alert(JSON.stringify(response.data));
+            console.log(response)
+            setLayers("response")
         })
         .catch(function (error) {
             // manipulate the error response here
         });
+    }
 }
 
 export default calculateBuffer
