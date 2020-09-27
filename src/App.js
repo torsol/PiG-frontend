@@ -1,39 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
-import HomeIcon from "@material-ui/icons/Home";
-import ReceiptIcon from "@material-ui/icons/Receipt";
-import SettingsIcon from "@material-ui/icons/Settings";
 import mapboxgl from 'mapbox-gl';
 import Sidebar from './Sidebar';
-import axios from 'axios'
-import calculateBuffer from './utils/APIConnection'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g';
 
 const App = (props) => {
-
-    const items = [
-        { name: "solberGis", label: "solberGis", Icon: HomeIcon },
-        {
-            name: "Buffer",
-            label: "Buffer",
-            Icon: ReceiptIcon,
-            items: [
-                { name: "statements", label: "Statements", "onClick": calculateBuffer },
-                { name: "reports", label: "Reports" }
-            ]
-        },
-        "divider",
-        {
-            name: "settings",
-            label: "Settings",
-            Icon: SettingsIcon,
-            items: [
-                { name: "profile", label: "Profile" },
-                { name: "insurance", label: "Insurance" }
-            ]
-        }
-    ];
-
 
     // initial coordinates for Trondheim
     const [lng, setLng] = useState(10.38);
@@ -65,13 +36,12 @@ const App = (props) => {
         };
 
         if (!map) initializeMap({ setMap, mapContainer });
-
+    // eslint-disable-next-line
     }, [map])
 
     return (
         <div>
-            <div>Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}</div>
-            <Sidebar items={items} lng={lng} lat={lat} zoom={zoom} />
+            <Sidebar />
             <div ref={el => mapContainer.current = el} className='mapContainer' />
         </div>
     )

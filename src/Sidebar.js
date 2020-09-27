@@ -1,13 +1,42 @@
-import React from "react";
+import React, {useState} from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ExpandLessIcon from "@material-ui/icons/ExpandLess";
 import Collapse from "@material-ui/core/Collapse";
+import HomeIcon from "@material-ui/icons/Home";
+import ReceiptIcon from "@material-ui/icons/Receipt";
+import SettingsIcon from "@material-ui/icons/Settings";
+
+import calculateBuffer from './utils/APIConnection'
+
+const items = [
+  { name: "solberGis", label: "solberGis", Icon: HomeIcon },
+  {
+      name: "Buffer",
+      label: "Buffer",
+      Icon: ReceiptIcon,
+      items: [
+          { name: "statements", label: "Statements", "onClick": calculateBuffer },
+          { name: "reports", label: "Reports" }
+      ]
+  },
+  "divider",
+  {
+      name: "settings",
+      label: "Settings",
+      Icon: SettingsIcon,
+      items: [
+          { name: "profile", label: "Profile" },
+          { name: "insurance", label: "Insurance" }
+      ]
+  }
+];
+
 
 function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
-  const [collapsed, setCollapsed] = React.useState(true);
+  const [collapsed, setCollapsed] = useState(true);
   const { label, items, Icon, onClick: onClickProp } = item;
 
   function toggleCollapse() {
@@ -29,7 +58,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
     expandIcon = !collapsed ? (
       <ExpandLessIcon
         className={
-          "sidebar-item-expand-arrow" + " sidebar-item-expand-arrow-expanded"
+          ["sidebar-item-expand-arrow", " sidebar-item-expand-arrow-expanded"]
         }
       />
     ) : (
@@ -78,7 +107,7 @@ function SidebarItem({ depthStep = 10, depth = 0, expanded, item, ...rest }) {
   );
 }
 
-function Sidebar({ items, depthStep, depth, expanded }) {
+function Sidebar({ depthStep, depth, expanded }) {
   return (
     <div className="sidebar">
       <List disablePadding dense>
