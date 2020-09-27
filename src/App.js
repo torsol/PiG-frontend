@@ -5,21 +5,11 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import mapboxgl from 'mapbox-gl';
 import Sidebar from './Sidebar';
 import axios from 'axios'
+import onClick from './utils/APIConnection'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g';
 
 const App = (props) => {
-
-    function onClick(e, item) {
-        axios
-            .get("https://jsonplaceholder.typicode.com/todos?_page=1&_limit=10")
-            .then(response => {
-                window.alert(JSON.stringify(response.data));
-            })
-            .catch(function (error) {
-                // manipulate the error response here
-            });
-    }
 
     const items = [
         { name: "solberGis", label: "solberGis", Icon: HomeIcon },
