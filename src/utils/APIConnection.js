@@ -47,7 +47,7 @@ function calculateBuffer(setLayers) {
         .post('http://localhost:5000/api/buffer', sampleJson)
         .then(response => {
             console.log(response)
-            setLayers("response")
+            setLayers([response.data])
         })
         .catch(function (error) {
             // manipulate the error response here

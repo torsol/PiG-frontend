@@ -7,13 +7,13 @@ const App = (props) => {
     const [layers, setLayers] = useState([])
 
     useEffect(() => {
-        console.log('state updated')
+        console.log('App', 'State updated')
       }, [layers]);
 
     return (
         <div>
             <Sidebar setLayers={setLayers}/>
-            <Map layers = {layers} />
+            <Map layers ={layers} />
         </div>
     )
 

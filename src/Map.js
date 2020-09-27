@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = (props) => {
+const Map = ({layers}) => {
 
   // react hooks for storing the map
   const [map, setMap] = useState(null);
@@ -29,10 +29,34 @@ const Map = (props) => {
     });
   };
 
+  const addLayer = (layer) => {
+    map.addSource('maine', {
+        'type': 'geojson',
+        'data': layer
+    })
+    map.addLayer({
+        'id': 'maine',
+        'type': 'fill',
+        'source': 'maine',
+        'layout': {},
+        'paint': {
+        'fill-color': '#088',
+        'fill-opacity': 0.8
+        }
+        });
+  }
+
+  // render map on initial load
   useEffect(() => {
     if (!map) initializeMap({ setMap, mapContainer });
     // eslint-disable-next-line
   }, [map]);
+
+  // render map on initial load
+  useEffect(() => {
+    console.log('Map', 'Layers handled')
+    if (map) addLayer(layers[0])
+  }, [layers]);
 
   return (
     <div ref={(el) => (mapContainer.current = el)} className="mapContainer" />
