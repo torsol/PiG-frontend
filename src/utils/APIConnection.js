@@ -42,7 +42,7 @@ const sampleJson = {
 }
 
 
-function onClick(e, item) {
+function calculateBuffer(e, item) {
     axios
         .post('http://localhost:5000/api/buffer', sampleJson)
         .then(response => {
@@ -53,4 +53,4 @@ function onClick(e, item) {
         });
 }
 
-export default onClick
+export default calculateBuffer

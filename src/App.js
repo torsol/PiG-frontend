@@ -5,7 +5,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import mapboxgl from 'mapbox-gl';
 import Sidebar from './Sidebar';
 import axios from 'axios'
-import onClick from './utils/APIConnection'
+import calculateBuffer from './utils/APIConnection'
 
 mapboxgl.accessToken = 'pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g';
 
@@ -18,8 +18,8 @@ const App = (props) => {
             label: "Buffer",
             Icon: ReceiptIcon,
             items: [
-                { name: "statements", label: "Statements", onClick },
-                { name: "reports", label: "Reports", onClick }
+                { name: "statements", label: "Statements", "onClick": calculateBuffer },
+                { name: "reports", label: "Reports" }
             ]
         },
         "divider",
@@ -29,7 +29,7 @@ const App = (props) => {
             Icon: SettingsIcon,
             items: [
                 { name: "profile", label: "Profile" },
-                { name: "insurance", label: "Insurance", onClick }
+                { name: "insurance", label: "Insurance" }
             ]
         }
     ];
