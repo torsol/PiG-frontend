@@ -29,26 +29,6 @@ const Map = (props) => {
     });
   };
 
-  const addSource = (geojson) => {
-    const layerName = "test";
-
-    map.addSource(layerName, {
-      type: "geojson",
-      data: geojson,
-    });
-
-    map.addLayer({
-      id: layerName,
-      type: "fill",
-      source: layerName,
-      layout: {},
-      paint: {
-        "fill-color": "#088",
-        "fill-opacity": 0.8,
-      },
-    });
-  };
-
   useEffect(() => {
     if (!map) initializeMap({ setMap, mapContainer });
     // eslint-disable-next-line
