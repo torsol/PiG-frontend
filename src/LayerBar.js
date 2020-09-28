@@ -6,7 +6,7 @@ const LayerBar = ({ layers }) => {
     <div>
       {layers &&
         layers.map((layer) => {
-          return <div key={layer.name}>{layer.name}</div>;
+          return <div key={layer.id}>{layer.name}</div>;
         })}
     </div>
   );

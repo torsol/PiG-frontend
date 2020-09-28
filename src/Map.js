@@ -29,14 +29,14 @@ const Map = ({ layers }) => {
   };
 
   const addLayer = (layer) => {
-    map.addSource(layer.name, {
+    map.addSource(layer.id, {
       type: "geojson",
       data: layer,
     });
     map.addLayer({
-      id: layer.name,
+      id: layer.id,
       type: "fill",
-      source: layer.name,
+      source: layer.id,
       layout: {},
       paint: {
         "fill-color": layer.color,
@@ -45,9 +45,11 @@ const Map = ({ layers }) => {
     });
   };
 
-  const removeLayer = (layerID) => {
-    map.removeLayer(layerID);
-    map.removeSource(layerID);
+  const removeLayer = (layers) => {
+    layers.forEach(layerID => {
+      map.removeLayer(layerID);
+      map.removeSource(layerID);
+    } )
   };
 
   const getCurrentLayerIDs = () => {
@@ -55,6 +57,22 @@ const Map = ({ layers }) => {
       return layer.source !== "composite" && layer.type !== "background";
     }).map(layer => layer.id)
   };
+
+  const handleLayerUpdate = (layers) => {
+
+    const currentLayers = getCurrentLayerIDs()
+
+    const removable=currentLayers.filter(function(layer){        //get the index for layers that have been deleted in the state
+      return layers.map(layer => layer.id).indexOf(layer)===-1;
+    })
+
+    const addable=layers.filter(function(layer){                 //get the index for layers that have been added to the state
+      return currentLayers.indexOf(layer.id)===-1;
+    })
+    if (addable[0]) addLayer(addable[0])
+    if (removable[0]) removeLayer(removable)
+
+  }
 
   // render map on initial load
   useEffect(() => {
@@ -65,8 +83,7 @@ const Map = ({ layers }) => {
   // render map on initial load
   useEffect(() => {
     console.log("Map", "Layers handled");
-    if (map) addLayer(layers.slice(-1)[0]); //add the last added layer to the list
-    if (map) console.log(getCurrentLayerIDs());
+    if (map) handleLayerUpdate(layers);
     // eslint-disable-next-line
   }, [layers]);
 

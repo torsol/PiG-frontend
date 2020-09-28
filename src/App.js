@@ -8,9 +8,15 @@ const App = (props) => {
 
   const addLayerToState = (layers, setLayers) => {
     return (newValue, operation) => {
-      newValue["name"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
+      newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
       newValue["color"] = getRandomColor(); //generates random color
       setLayers([...layers, newValue]);
+    };
+  };
+
+  const removeLayersFromState = (setLayers) => {
+    return () => {
+      setLayers([]);
     };
   };
 
@@ -22,6 +28,7 @@ const App = (props) => {
     <div>
       <Sidebar
         addLayerToState={addLayerToState(layers, setLayers)}
+        removeLayersFromState={removeLayersFromState(setLayers)}
         layers={layers}
       />
       <Map layers={layers} />
