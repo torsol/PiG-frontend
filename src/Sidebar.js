@@ -12,6 +12,7 @@ const Sidebar = ({addLayerToState, layers}) => {
     <div className="sidebar">
       <List disablePadding dense>
       <ListItem onClick={calculateBuffer(addLayerToState)}>Buffer</ListItem>
+      <ListItem onClick={calculateBuffer(addLayerToState)}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayerToState={addLayerToState}/></ListItem>
       <LayerBar layers={layers}/>

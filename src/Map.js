@@ -45,6 +45,17 @@ const Map = ({ layers }) => {
     });
   };
 
+  const removeLayer = (layerID) => {
+    map.removeLayer(layerID);
+    map.removeSource(layerID);
+  };
+
+  const getCurrentLayerIDs = () => {
+    return map.getStyle().layers.filter((layer) => {
+      return layer.source !== "composite" && layer.type !== "background";
+    }).map(layer => layer.id)
+  };
+
   // render map on initial load
   useEffect(() => {
     if (!map) initializeMap({ setMap, mapContainer });
@@ -55,6 +66,7 @@ const Map = ({ layers }) => {
   useEffect(() => {
     console.log("Map", "Layers handled");
     if (map) addLayer(layers.slice(-1)[0]); //add the last added layer to the list
+    if (map) console.log(getCurrentLayerIDs());
     // eslint-disable-next-line
   }, [layers]);
 
