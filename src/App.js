@@ -6,13 +6,21 @@ const App = (props) => {
 
     const [layers, setLayers] = useState([])
 
+    const addLayerToState = (layers, setLayers) => {
+        return (newValue) => {
+            console.log("addLayerToState")
+            console.log(newValue, layers, setLayers)
+            setLayers([...layers, newValue])
+        }
+    } 
+
     useEffect(() => {
         console.log('App', 'State updated')
       }, [layers]);
 
     return (
         <div>
-            <Sidebar setLayers={setLayers}/>
+            <Sidebar addLayerToState={addLayerToState(layers, setLayers)}/>
             <Map layers ={layers} />
         </div>
     )

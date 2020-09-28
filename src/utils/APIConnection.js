@@ -1,58 +1,25 @@
-import axios from 'axios'
+import axios from "axios";
+import * as data from "../data/sample.json";
 
-const sampleJson = {
-    "value": 10,
-    "layers":
-    {
-        "type": "FeatureCollection",
-        "features": [
-            {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                    "type": "Polygon",
-                    "coordinates": [
-                        [
-                            [
-                                5.47119140625,
-                                62.160371743742886
-                            ],
-                            [
-                                8.228759765625,
-                                62.160371743742886
-                            ],
-                            [
-                                8.228759765625,
-                                63.34720142876015
-                            ],
-                            [
-                                5.47119140625,
-                                63.34720142876015
-                            ],
-                            [
-                                5.47119140625,
-                                62.160371743742886
-                            ]
-                        ]
-                    ]
-                }
-            }
-        ]
-    }
+function cleanResponse(response) {
+  delete response.data["bbox"];
+  delete response.data["features"]["bbox"];
+  return response.data
 }
 
-function calculateBuffer(setLayers) {
-    return function () {
-        axios
-        .post('http://localhost:5000/api/buffer', sampleJson)
-        .then(response => {
-            console.log(response)
-            setLayers([response.data])
-        })
-        .catch(function (error) {
-            // manipulate the error response here
-        });
-    }
+function calculateBuffer(addLayerToState) {
+  return function () {
+    axios
+      .post("http://localhost:5000/api/buffer", data["default"])
+      .then((response) => {
+        console.log(addLayerToState)
+        const layer = cleanResponse(response)
+        addLayerToState(layer);
+      })
+      .catch(function (error) {
+        // manipulate the error response here
+      });
+  };
 }
 
-export default calculateBuffer
+export default calculateBuffer;
