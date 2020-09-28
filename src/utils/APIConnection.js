@@ -12,9 +12,8 @@ function calculateBuffer(addLayerToState) {
     axios
       .post("http://localhost:5000/api/buffer", data["default"])
       .then((response) => {
-        console.log(addLayerToState)
         const layer = cleanResponse(response)
-        addLayerToState(layer);
+        addLayerToState(layer, "buffer");
       })
       .catch(function (error) {
         // manipulate the error response here

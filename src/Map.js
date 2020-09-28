@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
-import {getRandomColor} from "./utils/RandomColor"
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
@@ -40,8 +39,8 @@ const Map = ({ layers }) => {
       source: layer.name,
       layout: {},
       paint: {
-        "fill-color": "#088",
-        "fill-opacity": 0.8,
+        "fill-color": layer.color,
+        "fill-opacity": 0.5,
       },
     });
   };
