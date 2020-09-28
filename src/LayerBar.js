@@ -1,12 +1,13 @@
+import { ListItem } from "@material-ui/core";
 import React from "react";
 
-const LayerBar = ({ layers }) => {
+const LayerBar = ({ layers, removeLayerFromState }) => {
 
   return (
     <div>
       {layers &&
         layers.map((layer) => {
-          return <div key={layer.id}>{layer.name}</div>;
+          return <ListItem key={layer.id}>{layer.name} onClick={removeLayerFromState}</ListItem>;
         })}
     </div>
   );

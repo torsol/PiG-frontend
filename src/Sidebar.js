@@ -7,7 +7,7 @@ import LayerBar from "./LayerBar"
 
 import calculateBuffer from './utils/APIConnection'
 
-const Sidebar = ({addLayerToState, removeLayersFromState, layers}) => {
+const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, layers}) => {
   return (
     <div className="sidebar">
       <List disablePadding dense>
@@ -15,7 +15,7 @@ const Sidebar = ({addLayerToState, removeLayersFromState, layers}) => {
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayerToState={addLayerToState}/></ListItem>
-      <LayerBar layers={layers}/>
+      <LayerBar layers={layers} removeLayersFromState={removeLayersFromState}/>
       </List>
     </div>
   );

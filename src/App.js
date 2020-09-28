@@ -20,6 +20,15 @@ const App = (props) => {
     };
   };
 
+  const removeLayerFromState = (setLayers, layers) => {
+    return (layerID) => {
+      var newLayers = layers.filter(layer => {
+        layer.id ==! layerID
+      })
+      setLayers(newLayers);
+    };
+  };
+
   useEffect(() => {
     console.log("App", "State updated");
   }, [layers]);
@@ -29,6 +38,7 @@ const App = (props) => {
       <Sidebar
         addLayerToState={addLayerToState(layers, setLayers)}
         removeLayersFromState={removeLayersFromState(setLayers)}
+        removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
       />
       <Map layers={layers} />
