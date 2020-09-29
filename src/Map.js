@@ -26,6 +26,15 @@ const Map = ({ layers }) => {
       setMap(map);
       map.resize();
     });
+    map.on("click", (e) => {
+      const currentLayers = getCurrentLayerIDs(map);
+      let f = map.queryRenderedFeatures(e.point, {
+        layers: currentLayers,
+      });
+      if (f.length) {
+        console.log(f[0]); //topmost feature
+      }
+    });
   };
 
   const addLayer = (layer) => {
@@ -44,42 +53,41 @@ const Map = ({ layers }) => {
       },
     });
 
-    map.on('click', layer.id, (e) => {
-      console.log(layer.id, "clicked")
-    })
-
-    delete layer['features'] // dont need the features already added to layer
+    delete layer["features"]; // dont need the features already added to layer
   };
 
   const removeLayer = (layers) => {
-    layers.forEach(layerID => {
+    layers.forEach((layerID) => {
       map.removeLayer(layerID);
       map.removeSource(layerID);
-    } )
+    });
   };
 
-  const getCurrentLayerIDs = () => {
-    return map.getStyle().layers.filter((layer) => {
-      return layer.source !== "composite" && layer.type !== "background";
-    }).map(layer => layer.id)
+  const getCurrentLayerIDs = (map) => {
+    return map
+      .getStyle()
+      .layers.filter((layer) => {
+        return layer.source !== "composite" && layer.type !== "background";
+      })
+      .map((layer) => layer.id);
   };
 
-  const handleLayerUpdate = (layers) => {
+  const handleLayerUpdate = (layers, map) => {
+    const currentLayers = getCurrentLayerIDs(map);
 
-    const currentLayers = getCurrentLayerIDs()
+    const removable = currentLayers.filter(function (layer) {
+      //get the index for layers that have been deleted in the state
+      return layers.map((layer) => layer.id).indexOf(layer) === -1;
+    });
 
-    const removable=currentLayers.filter(function(layer){        //get the index for layers that have been deleted in the state
-      return layers.map(layer => layer.id).indexOf(layer)===-1;
-    })
+    const addable = layers.filter(function (layer) {
+      //get the index for layers that have been added to the state
+      return currentLayers.indexOf(layer.id) === -1;
+    });
 
-    const addable=layers.filter(function(layer){                 //get the index for layers that have been added to the state
-      return currentLayers.indexOf(layer.id)===-1;
-    })
-
-    if (addable[0]) addLayer(addable[0])
-    if (removable[0]) removeLayer(removable)
-
-  }
+    if (addable[0]) addLayer(addable[0]);
+    if (removable[0]) removeLayer(removable);
+  };
 
   // render map on initial load
   useEffect(() => {
@@ -90,7 +98,7 @@ const Map = ({ layers }) => {
   // render map on initial load
   useEffect(() => {
     console.log("Map", "Layers handled");
-    if (map) handleLayerUpdate(layers);
+    if (map) handleLayerUpdate(layers, map);
     // eslint-disable-next-line
   }, [layers]);
 
