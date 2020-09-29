@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers }) => {
+const Map = ({ layers, addSelectedLayersToState }) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -14,7 +14,7 @@ const Map = ({ layers }) => {
   const lat = 63.43;
   const zoom = 13;
 
-  const initializeMap = ({ setMap, mapContainer }) => {
+  const initializeMap = (setMap, mapContainer, layers) => {
     const map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
@@ -26,13 +26,15 @@ const Map = ({ layers }) => {
       setMap(map);
       map.resize();
     });
+
     map.on("click", (e) => {
       const currentLayers = getCurrentLayerIDs(map);
       let f = map.queryRenderedFeatures(e.point, {
         layers: currentLayers,
       });
       if (f.length) {
-        console.log(f[0]); //topmost feature
+        // if you have clicked a number of layers
+        addSelectedLayersToState(f.map((feature) => feature.layer.id, layers));
       }
     });
   };
@@ -52,8 +54,6 @@ const Map = ({ layers }) => {
         "fill-opacity": 0.5,
       },
     });
-
-    delete layer["features"]; // dont need the features already added to layer
   };
 
   const removeLayer = (layers) => {
@@ -91,11 +91,10 @@ const Map = ({ layers }) => {
 
   // render map on initial load
   useEffect(() => {
-    if (!map) initializeMap({ setMap, mapContainer });
+    if (!map) initializeMap(setMap, mapContainer, layers);
     // eslint-disable-next-line
   }, [map]);
 
-  // render map on initial load
   useEffect(() => {
     console.log("Map", "Layers handled");
     if (map) handleLayerUpdate(layers, map);

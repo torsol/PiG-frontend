@@ -7,6 +7,7 @@ const App = (props) => {
   const [layers, setLayers] = useState([]);
   const [selectedLayers, setSelectedLayers] = useState([]);
 
+
   const addLayerToState = (layers, setLayers) => {
     return (newValue, operation) => {
       newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
@@ -14,6 +15,12 @@ const App = (props) => {
       setLayers([...layers, newValue]);
     };
   };
+
+  const addSelectedLayersToState = () => {
+    return (selected) => {
+      setSelectedLayers(selected)
+    }
+  }
 
   const removeLayersFromState = (setLayers) => {
     return () => {
@@ -41,8 +48,9 @@ const App = (props) => {
         removeLayersFromState={removeLayersFromState(setLayers)}
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
+        selectedLayers={selectedLayers}
       />
-      <Map layers={layers} />
+      <Map layers={layers} addSelectedLayersToState={addSelectedLayersToState()} />
     </div>
   );
 };

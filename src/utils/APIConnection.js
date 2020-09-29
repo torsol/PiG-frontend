@@ -7,10 +7,17 @@ function cleanResponse(response) {
   return response.data
 }
 
-function calculateBuffer(addLayerToState) {
+function calculateBuffer(addLayerToState, inputData) {
+  if (inputData[0]){
+    let processedInput = {}
+    processedInput['layers'] = inputData[0]
+    processedInput['value'] = 10
+    inputData = processedInput
+  }
+  console.log()
   return function () {
     axios
-      .post("http://localhost:5000/api/buffer", data["default"])
+      .post("http://localhost:5000/api/buffer", inputData)
       .then((response) => {
         const layer = cleanResponse(response)
         addLayerToState(layer, "buffer");
