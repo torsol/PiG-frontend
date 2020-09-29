@@ -15,7 +15,8 @@ const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, 
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayerToState={addLayerToState}/></ListItem>
-      <LayerBar layers={layers} removeLayersFromState={removeLayersFromState}/>
+      <Divider />
+      <LayerBar layers={layers} removeLayersFromState={removeLayersFromState} removeLayerFromState={removeLayerFromState}/>
       </List>
     </div>
   );

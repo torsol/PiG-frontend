@@ -7,7 +7,7 @@ const LayerBar = ({ layers, removeLayerFromState }) => {
     <div>
       {layers &&
         layers.map((layer) => {
-          return <ListItem key={layer.id}>{layer.name} onClick={removeLayerFromState}</ListItem>;
+          return <ListItem key={layer.id} onClick={() => removeLayerFromState(layer.id)}>{layer.name} </ListItem>;
         })}
     </div>
   );

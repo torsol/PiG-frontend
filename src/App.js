@@ -5,6 +5,7 @@ import { getRandomColor } from "./utils/RandomColor";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
+  const [selectedLayers, setSelectedLayers] = useState([]);
 
   const addLayerToState = (layers, setLayers) => {
     return (newValue, operation) => {
@@ -23,7 +24,7 @@ const App = (props) => {
   const removeLayerFromState = (setLayers, layers) => {
     return (layerID) => {
       var newLayers = layers.filter(layer => {
-        layer.id ==! layerID
+        return layer.id !== layerID
       })
       setLayers(newLayers);
     };

@@ -43,6 +43,12 @@ const Map = ({ layers }) => {
         "fill-opacity": 0.5,
       },
     });
+
+    map.on('click', layer.id, (e) => {
+      console.log(layer.id, "clicked")
+    })
+
+    delete layer['features'] // dont need the features already added to layer
   };
 
   const removeLayer = (layers) => {
@@ -69,6 +75,7 @@ const Map = ({ layers }) => {
     const addable=layers.filter(function(layer){                 //get the index for layers that have been added to the state
       return currentLayers.indexOf(layer.id)===-1;
     })
+
     if (addable[0]) addLayer(addable[0])
     if (removable[0]) removeLayer(removable)
 
