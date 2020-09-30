@@ -4,7 +4,7 @@ import mapboxgl from "mapbox-gl";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers, addSelectedLayersToState }) => {
+const Map = ({ layers, addSelectedLayersIndicesToState }) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -14,27 +14,28 @@ const Map = ({ layers, addSelectedLayersToState }) => {
   const lat = 63.43;
   const zoom = 13;
 
-  const initializeMap = (setMap, mapContainer, layers) => {
-    const map = new mapboxgl.Map({
+  const initializeMap = (setMap, mapContainer) => {
+    const initial_map = new mapboxgl.Map({
       container: mapContainer.current,
       style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
       center: [lng, lat],
       zoom: zoom,
     });
 
-    map.on("load", () => {
-      setMap(map);
-      map.resize();
+    initial_map.on("load", () => {
+      setMap(initial_map);
+
+      initial_map.resize();
     });
 
-    map.on("click", (e) => {
-      const currentLayers = getCurrentLayerIDs(map);
-      let f = map.queryRenderedFeatures(e.point, {
+    initial_map.on("click", (e) => {
+      const currentLayers = getCurrentLayerIDs(initial_map);
+      let f = initial_map.queryRenderedFeatures(e.point, {
         layers: currentLayers,
       });
       if (f.length) {
         // if you have clicked a number of layers
-        addSelectedLayersToState(f.map((feature) => feature.layer.id, layers));
+        addSelectedLayersIndicesToState(f.map((feature) => feature.layer.id));
       }
     });
   };
@@ -91,7 +92,7 @@ const Map = ({ layers, addSelectedLayersToState }) => {
 
   // render map on initial load
   useEffect(() => {
-    if (!map) initializeMap(setMap, mapContainer, layers);
+    if (!map) initializeMap(setMap, mapContainer);
     // eslint-disable-next-line
   }, [map]);
 

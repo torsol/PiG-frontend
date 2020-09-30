@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
@@ -56,7 +56,7 @@ const App = (props) => {
         selectedLayersIndices={selectedLayersIndices}
         removeSelectedLayersIndicesFromState={removeSelectedLayersIndicesFromState(setSelectedLayersIndices, selectedLayersIndices)}
       />
-      <Map layers={layers} addSelectedLayersToState={addSelectedLayersIndicesToState()} />
+      <Map layers={layers} addSelectedLayersIndicesToState={addSelectedLayersIndicesToState()} />
     </div>
   );
 };
