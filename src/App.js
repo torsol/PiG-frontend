@@ -5,7 +5,7 @@ import { getRandomColor } from "./utils/RandomColor";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
-  const [selectedLayers, setSelectedLayers] = useState([]);
+  const [selectedLayersIndices, setSelectedLayersIndices] = useState([]);
 
 
   const addLayerToState = (layers, setLayers) => {
@@ -16,9 +16,9 @@ const App = (props) => {
     };
   };
 
-  const addSelectedLayersToState = () => {
+  const addSelectedLayersIndicesToState = () => {
     return (selected) => {
-      setSelectedLayers(selected)
+      setSelectedLayersIndices(selected)
     }
   }
 
@@ -37,9 +37,14 @@ const App = (props) => {
     };
   };
 
-  useEffect(() => {
-    console.log("App", "State updated");
-  }, [layers]);
+  const removeSelectedLayersIndicesFromState = (setSelectedLayersIndices, selectedLayersIndices) => {
+    return (layerID) => {
+      var newLayers = selectedLayersIndices.filter(layer => {
+        return layer !== layerID
+      })
+      setSelectedLayersIndices(newLayers);
+    };
+  };
 
   return (
     <div>
@@ -48,9 +53,10 @@ const App = (props) => {
         removeLayersFromState={removeLayersFromState(setLayers)}
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
-        selectedLayers={selectedLayers}
+        selectedLayersIndices={selectedLayersIndices}
+        removeSelectedLayersIndicesFromState={removeSelectedLayersIndicesFromState(setSelectedLayersIndices, selectedLayersIndices)}
       />
-      <Map layers={layers} addSelectedLayersToState={addSelectedLayersToState()} />
+      <Map layers={layers} addSelectedLayersToState={addSelectedLayersIndicesToState()} />
     </div>
   );
 };

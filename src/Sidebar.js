@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import DropZone from "./DropZone"
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,22 +7,21 @@ import LayerBar from "./LayerBar"
 
 import calculateBuffer from './utils/APIConnection'
 
-const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, layers, selectedLayers}) => {
+const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, layers, selectedLayersIndices, removeSelectedLayersIndicesFromState}) => {
 
-  var inputData = layers.filter((layer) => selectedLayers.indexOf(layer.id) !== -1)
-  console.log(inputData)
+  var selectedLayers = layers.filter((layer) => selectedLayersIndices.indexOf(layer.id) !== -1) // match selected indices with layers stored in state
 
   return (
     <div className="sidebar">
       <List disablePadding dense>
-      <ListItem onClick={calculateBuffer(addLayerToState, inputData)}>Buffer</ListItem>
+      <ListItem onClick={calculateBuffer(addLayerToState, selectedLayers)}>Buffer</ListItem>
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayerToState={addLayerToState}/></ListItem>
       <Divider />
       <LayerBar layers={layers} removeLayersFromState={removeLayersFromState} removeLayerFromState={removeLayerFromState}/>
       <Divider />
-      <LayerBar layers={inputData}/>
+      <LayerBar layers={selectedLayers} removeLayerFromState={removeSelectedLayersIndicesFromState}/>
       </List>
     </div>
   );

@@ -1,5 +1,4 @@
 import axios from "axios";
-import * as data from "../data/sample.json";
 
 function cleanResponse(response) {
   delete response.data["bbox"];
