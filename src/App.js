@@ -7,12 +7,15 @@ const App = (props) => {
   const [layers, setLayers] = useState([]);
   const [selectedLayersIndices, setSelectedLayersIndices] = useState([]);
 
-  const addLayerToState = (layers, setLayers) => {
-    return (newValue, operation) => {
-      newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
-      newValue["name"] = operation + "_" + Math.random().toString(36).slice(2);
-      newValue["color"] = getRandomColor(); //generates random color
-      setLayers([...layers, newValue]);
+  const addLayersToState = (layers, setLayers) => {
+    return (newValues, operation) => {
+      newValues.forEach((newValue) => {
+        newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
+        newValue["name"] =
+          operation + "_" + Math.random().toString(36).slice(2);
+        newValue["color"] = getRandomColor(); //generates random color
+      });
+      setLayers([...layers, ...newValues]);
     };
   };
 
@@ -53,7 +56,7 @@ const App = (props) => {
   return (
     <div>
       <Sidebar
-        addLayerToState={addLayerToState(layers, setLayers)}
+        addLayersToState={addLayersToState(layers, setLayers)}
         removeLayersFromState={removeLayersFromState(setLayers)}
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}

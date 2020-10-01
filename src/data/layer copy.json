@@ -1,6 +1,5 @@
 {
-  "value": 100,
-  "layers": {
+    "name": "local_polygon",
     "type": "FeatureCollection",
     "features": [
       {
@@ -21,4 +20,3 @@
       }
     ]
   }
-}
