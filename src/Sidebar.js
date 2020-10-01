@@ -18,7 +18,7 @@ const Sidebar = ({addLayersToState, removeLayersFromState, removeLayerFromState,
       <ListItem onClick={calculateUnion(addLayersToState, selectedLayers)}>Union</ListItem>
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
-      <ListItem><DropZone accept ="*.json" addLayersToState={addLayersToState}/></ListItem>
+      <ListItem><DropZone accept ="*.json" addLayersToState={addLayersToState} layers={layers}/></ListItem>
       <Divider />
       <LayerBar layers={layers} removeLayersFromState={removeLayersFromState} removeLayerFromState={removeLayerFromState}/>
       <Divider />

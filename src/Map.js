@@ -40,21 +40,23 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
     });
   };
 
-  const addLayer = (layer) => {
-    map.addSource(layer.id, {
-      type: "geojson",
-      data: layer,
-    });
-    map.addLayer({
-      id: layer.id,
-      type: "fill",
-      source: layer.id,
-      layout: {},
-      paint: {
-        "fill-color": layer.color,
-        "fill-opacity": 0.5,
-      },
-    });
+  const addLayer = (layers) => {
+    layers.forEach(layer => {
+      map.addSource(layer.id, {
+        type: "geojson",
+        data: layer,
+      });
+      map.addLayer({
+        id: layer.id,
+        type: "fill",
+        source: layer.id,
+        layout: {},
+        paint: {
+          "fill-color": layer.color,
+          "fill-opacity": 0.5,
+        },
+      });
+    })
   };
 
   const removeLayer = (layers) => {
@@ -86,7 +88,7 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
       return currentLayers.indexOf(layer.id) === -1;
     });
 
-    if (addable[0]) addLayer(addable[0]);
+    if (addable[0]) addLayer(addable);
     if (removable[0]) removeLayer(removable);
   };
 

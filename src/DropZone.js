@@ -1,7 +1,7 @@
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 
-function Dropzone({ addLayersToState }) {
+function Dropzone({ addLayersToState, layers }) {
   const onDrop = useCallback((acceptedFiles) => {
     let promises = [];
     for (let file of acceptedFiles) {
@@ -16,7 +16,8 @@ function Dropzone({ addLayersToState }) {
     Promise.all(promises).then((files) => {
         addLayersToState(files, "upload")
     });
-  });
+  //eslint-disable-next-line
+  }, [layers]);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     accept: ".json",
