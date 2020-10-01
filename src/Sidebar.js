@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider"
 import LayerBar from "./LayerBar"
 
-import calculateBuffer from './utils/APIConnection'
+import {calculateBuffer, calculateUnion} from './utils/APIConnection'
 
 const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, layers, selectedLayersIndices, removeSelectedLayersIndicesFromState}) => {
 
@@ -15,6 +15,7 @@ const Sidebar = ({addLayerToState, removeLayersFromState, removeLayerFromState, 
     <div className="sidebar">
       <List disablePadding dense>
       <ListItem onClick={calculateBuffer(addLayerToState, selectedLayers)}>Buffer</ListItem>
+      <ListItem onClick={calculateUnion(addLayerToState, selectedLayers)}>Union</ListItem>
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayerToState={addLayerToState}/></ListItem>
