@@ -1,6 +1,7 @@
 import axios from "axios";
 
-function concatGeoJSON(list) { // used to combine features into one geojson for backend processing
+function concatGeoJSON(list) {
+  // used to combine features into one geojson for backend processing
   let features = [];
 
   list.forEach((feature) => {
@@ -16,16 +17,12 @@ function concatGeoJSON(list) { // used to combine features into one geojson for 
 }
 
 export function calculateBuffer(addLayersToState, inputData) {
-  if (inputData[0]) {
-    let processedInput = {};
-    processedInput = inputData[0];
-    processedInput["value"] = 10;
-    inputData = processedInput;
-  }
+  let requestData = concatGeoJSON(inputData);
+  requestData["value"] = 10;
 
   return function () {
     axios
-      .post("http://localhost:5000/api/buffer", inputData)
+      .post("http://localhost:5000/api/buffer", requestData)
       .then((response) => {
         addLayersToState([response.data], "buffer");
       })
