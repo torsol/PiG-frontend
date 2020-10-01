@@ -9,6 +9,9 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
 
+  // eslint-disable-next-line
+  var currentLayerIDs = [];
+
   // initial coordinates for Trondheim
   const lng = 10.38;
   const lat = 63.43;
@@ -28,10 +31,9 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
       initial_map.resize();
     });
 
-    initial_map.on("click", (e) => {
-      const currentLayers = getCurrentLayerIDs(initial_map);
+    initial_map.on("click", (e, currentLayerIDs) => {
       let f = initial_map.queryRenderedFeatures(e.point, {
-        layers: currentLayers,
+        layers: currentLayerIDs,
       });
       if (f.length) {
         // if you have clicked a number of layers
@@ -66,7 +68,7 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
     });
   };
 
-  const getCurrentLayerIDs = (map) => {
+  const getCurrentLayerIDs = () => {
     return map
       .getStyle()
       .layers.filter((layer) => {
@@ -100,6 +102,8 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
 
   useEffect(() => {
     console.log("Map", "Layers handled");
+    // eslint-disable-next-line
+    if (map) currentLayerIDs = getCurrentLayerIDs();
     if (map) handleLayerUpdate(layers, map);
     // eslint-disable-next-line
   }, [layers]);
