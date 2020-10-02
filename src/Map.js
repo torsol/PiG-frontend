@@ -31,13 +31,15 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
       initial_map.resize();
     });
 
-    initial_map.on("click", (e, currentLayerIDs) => {
+    initial_map.on("click", (e) => {
+      console.log(e);
       let f = initial_map.queryRenderedFeatures(e.point, {
-        layers: currentLayerIDs,
+        layers: getCurrentLayerIDs(initial_map),
       });
       if (f.length) {
+        console.log('selected features', f)
         // if you have clicked a number of layers
-        addSelectedLayersIndicesToState(f.map((feature) => feature.layer.id));
+        addSelectedLayersIndicesToState(f.map((feature) => feature.layer.id)[0]);
       }
     });
   };
@@ -68,7 +70,7 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
     });
   };
 
-  const getCurrentLayerIDs = () => {
+  const getCurrentLayerIDs = (map) => {
     return map
       .getStyle()
       .layers.filter((layer) => {
@@ -103,7 +105,6 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
   useEffect(() => {
     console.log("Map", "Layers handled");
     // eslint-disable-next-line
-    if (map) currentLayerIDs = getCurrentLayerIDs();
     if (map) handleLayerUpdate(layers, map);
     // eslint-disable-next-line
   }, [layers]);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
@@ -6,6 +6,7 @@ import { getRandomColor } from "./utils/RandomColor";
 const App = (props) => {
   const [layers, setLayers] = useState([]);
   const [selectedLayersIndices, setSelectedLayersIndices] = useState([]);
+  const selectedLayersRef = useRef(selectedLayersIndices);
 
   const addLayersToState = (layers, setLayers) => {
     return (newValues, operation) => {
@@ -19,9 +20,22 @@ const App = (props) => {
     };
   };
 
-  const addSelectedLayersIndicesToState = () => {
+  const handleSelectedChange = () => {
     return (selected) => {
-      setSelectedLayersIndices(selected);
+      console.log(selected);
+      if (selectedLayersRef.current.indexOf(selected) === -1) {
+        selectedLayersRef.current = [...selectedLayersRef.current, selected];
+        console.log(selectedLayersRef.current);
+        setSelectedLayersIndices(selectedLayersRef.current); // if not selected, add to state
+      } else {
+        selectedLayersRef.current = selectedLayersRef.current.filter((indice) => {
+          // if selected, filter out of state
+          return indice !== selected;
+        })
+        setSelectedLayersIndices(
+          selectedLayersRef.current
+        );
+      }
     };
   };
 
@@ -49,6 +63,7 @@ const App = (props) => {
       var newLayers = selectedLayersIndices.filter((layer) => {
         return layer !== layerID;
       });
+      selectedLayersRef.current = newLayers
       setSelectedLayersIndices(newLayers);
     };
   };
@@ -68,7 +83,9 @@ const App = (props) => {
       />
       <Map
         layers={layers}
-        addSelectedLayersIndicesToState={addSelectedLayersIndicesToState()}
+        addSelectedLayersIndicesToState={handleSelectedChange(
+          selectedLayersIndices
+        )}
       />
     </div>
   );
