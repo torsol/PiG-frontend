@@ -42,8 +42,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
 
     function onCreation(e) {
       var data = draw.getAll();
-      console.log(data);
-      addLayersToState([data]);
+      addLayersToState([data], 'drawTool');
       draw.deleteAll();
     }
 
