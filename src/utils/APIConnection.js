@@ -1,5 +1,8 @@
 import axios from "axios";
 
+
+const HOST = "10.53.26.143:5000"
+
 function concatGeoJSON(list) {
   // used to combine features into one geojson for backend processing
   let features = [];
@@ -22,7 +25,7 @@ export function calculateBuffer(addLayersToState, inputData) {
 
   return function () {
     axios
-      .post("http://localhost:5000/api/buffer", requestData)
+      .post("http://" + HOST + "/api/buffer", requestData)
       .then((response) => {
         addLayersToState([response.data], "buffer");
       })
@@ -36,9 +39,23 @@ export function calculateUnion(addLayersToState, inputData) {
   return function () {
     let requestData = concatGeoJSON(inputData);
     axios
-      .post("http://localhost:5000/api/union", requestData)
+      .post("http://" + HOST + "/api/union", requestData)
       .then((response) => {
         addLayersToState([response.data], "union");
+      })
+      .catch(function (error) {
+        // manipulate the error response here
+      });
+  };
+}
+
+export function calculateIntersection(addLayersToState, inputData) {
+  return function () {
+    let requestData = concatGeoJSON(inputData);
+    axios
+      .post("http://" + HOST + "/api/intersection", requestData)
+      .then((response) => {
+        addLayersToState([response.data], "intersection");
       })
       .catch(function (error) {
         // manipulate the error response here

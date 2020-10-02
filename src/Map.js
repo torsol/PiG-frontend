@@ -29,8 +29,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
       controls: {
         point: true,
         line_string: true,
-        polygon: true,
-        trash: true,
+        polygon: true
       },
     });
 
@@ -77,7 +76,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
         layout: {},
         paint: {
           "fill-color": layer.color,
-          "fill-opacity": 0.5,
+          "fill-opacity": 0.7,
         },
       });
     });

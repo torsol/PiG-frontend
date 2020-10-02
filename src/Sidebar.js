@@ -5,7 +5,7 @@ import ListItem from "@material-ui/core/ListItem";
 import Divider from "@material-ui/core/Divider"
 import LayerBar from "./LayerBar"
 
-import {calculateBuffer, calculateUnion} from './utils/APIConnection'
+import {calculateBuffer, calculateUnion, calculateIntersection} from './utils/APIConnection'
 
 const Sidebar = ({addLayersToState, removeLayersFromState, removeLayerFromState, layers, selectedLayersIndices, removeSelectedLayersIndicesFromState}) => {
 
@@ -18,6 +18,7 @@ const Sidebar = ({addLayersToState, removeLayersFromState, removeLayerFromState,
       <Divider />
       <ListItem onClick={calculateBuffer(addLayersToState, selectedLayers)}>Buffer</ListItem>
       <ListItem onClick={calculateUnion(addLayersToState, selectedLayers)}>Union</ListItem>
+      <ListItem onClick={calculateIntersection(addLayersToState, selectedLayers)}>Intersection</ListItem>
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayersToState={addLayersToState} layers={layers}/></ListItem>
