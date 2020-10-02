@@ -8,7 +8,7 @@ const App = (props) => {
   const [selectedLayersIndices, setSelectedLayersIndices] = useState([]);
   const selectedLayersRef = useRef(selectedLayersIndices);
 
-  const addLayersToState = (layers, setLayers) => {
+  const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
       newValues.forEach((newValue) => {
         newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
@@ -16,7 +16,7 @@ const App = (props) => {
           operation + "_" + Math.random().toString(36).slice(2);
         newValue["color"] = getRandomColor(); //generates random color
       });
-      setLayers([...layers, ...newValues]);
+      setLayers(layers => [...layers, ...newValues]);
     };
   };
 
@@ -77,7 +77,7 @@ const App = (props) => {
   return (
     <div>
       <Sidebar
-        addLayersToState={addLayersToState(layers, setLayers)}
+        addLayersToState={addLayersToState(setLayers)}
         removeLayersFromState={removeLayersFromState(setLayers)}
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
@@ -90,6 +90,7 @@ const App = (props) => {
       <Map
         layers={layers}
         handleSelectedChange={handleSelectedChange()}
+        addLayersToState={addLayersToState(setLayers)}
       />
     </div>
   );

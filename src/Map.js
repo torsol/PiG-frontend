@@ -6,7 +6,7 @@ import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers, handleSelectedChange }) => {
+const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -24,17 +24,27 @@ const Map = ({ layers, handleSelectedChange }) => {
       zoom: zoom,
     });
 
-    var Draw = new MapboxDraw();
+    var draw = new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        point: true,
+        line_string: true,
+        polygon: true,
+        trash: true,
+      },
+    });
 
-    initial_map.addControl(Draw, "top-right");
+    initial_map.addControl(draw, "top-right");
 
-    initial_map.on("draw.create", updateArea);
-    initial_map.on("draw.delete", updateArea);
-    initial_map.on("draw.update", updateArea);
+    initial_map.on("draw.create", onCreation);
+    //initial_map.on("draw.delete", updateArea);
+    //initial_map.on("draw.update", updateArea);
 
-    function updateArea(e) {
-      var data = Draw.getAll();
-      console.log(data)
+    function onCreation(e) {
+      var data = draw.getAll();
+      console.log(data);
+      addLayersToState([data]);
+      draw.deleteAll();
     }
 
     initial_map.on("load", () => {
@@ -49,7 +59,6 @@ const Map = ({ layers, handleSelectedChange }) => {
         layers: getCurrentLayerIDs(initial_map),
       });
       if (f.length) {
-        console.log("selected features", f);
         // if you have clicked a number of layers
         handleSelectedChange(f.map((feature) => feature.layer.id)[0]);
       }
@@ -86,7 +95,12 @@ const Map = ({ layers, handleSelectedChange }) => {
     return map
       .getStyle()
       .layers.filter((layer) => {
-        return (layer.source !== "composite" && layer.type !== "background") && layer.source !== "mapbox-gl-draw-cold" && layer.source !== "mapbox-gl-draw-hot";
+        return (
+          layer.source !== "composite" &&
+          layer.type !== "background" &&
+          layer.source !== "mapbox-gl-draw-cold" &&
+          layer.source !== "mapbox-gl-draw-hot"
+        );
       })
       .map((layer) => layer.id);
   };
