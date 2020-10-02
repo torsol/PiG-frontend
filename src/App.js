@@ -43,6 +43,7 @@ const App = (props) => {
     return () => {
       setSelectedLayersIndices([]);
       setLayers([]);
+      selectedLayersRef.current = []
     };
   };
 
@@ -51,6 +52,11 @@ const App = (props) => {
       var newLayers = layers.filter((layer) => {
         return layer.id !== layerID;
       });
+      var newSelectedIndices = selectedLayersRef.current.filter((layer) => {
+        return layer !== layerID;
+      });
+      setSelectedLayersIndices(newSelectedIndices)
+      selectedLayersRef.current = newSelectedIndices
       setLayers(newLayers);
     };
   };
@@ -83,9 +89,7 @@ const App = (props) => {
       />
       <Map
         layers={layers}
-        addSelectedLayersIndicesToState={handleSelectedChange(
-          selectedLayersIndices
-        )}
+        handleSelectedChange={handleSelectedChange()}
       />
     </div>
   );

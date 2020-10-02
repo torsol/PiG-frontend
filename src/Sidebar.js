@@ -14,13 +14,19 @@ const Sidebar = ({addLayersToState, removeLayersFromState, removeLayerFromState,
   return (
     <div className="sidebar">
       <List disablePadding dense>
+      <ListItem>Operations</ListItem>
+      <Divider />
       <ListItem onClick={calculateBuffer(addLayersToState, selectedLayers)}>Buffer</ListItem>
       <ListItem onClick={calculateUnion(addLayersToState, selectedLayers)}>Union</ListItem>
       <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
       <Divider />
       <ListItem><DropZone accept ="*.json" addLayersToState={addLayersToState} layers={layers}/></ListItem>
       <Divider />
+      <ListItem>Layers</ListItem>
+      <Divider />
       <LayerBar layers={layers} removeLayersFromState={removeLayersFromState} removeLayerFromState={removeLayerFromState}/>
+      <Divider />
+      <ListItem>Selected layers</ListItem>
       <Divider />
       <LayerBar layers={selectedLayers} removeLayerFromState={removeSelectedLayersIndicesFromState}/>
       </List>

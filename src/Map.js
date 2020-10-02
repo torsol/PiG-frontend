@@ -1,16 +1,15 @@
 import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers, addSelectedLayersIndicesToState }) => {
+const Map = ({ layers, handleSelectedChange }) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
-
-  // eslint-disable-next-line
-  var currentLayerIDs = [];
 
   // initial coordinates for Trondheim
   const lng = 10.38;
@@ -25,6 +24,19 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
       zoom: zoom,
     });
 
+    var Draw = new MapboxDraw();
+
+    initial_map.addControl(Draw, "top-right");
+
+    initial_map.on("draw.create", updateArea);
+    initial_map.on("draw.delete", updateArea);
+    initial_map.on("draw.update", updateArea);
+
+    function updateArea(e) {
+      var data = Draw.getAll();
+      console.log(data)
+    }
+
     initial_map.on("load", () => {
       setMap(initial_map);
 
@@ -37,15 +49,15 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
         layers: getCurrentLayerIDs(initial_map),
       });
       if (f.length) {
-        console.log('selected features', f)
+        console.log("selected features", f);
         // if you have clicked a number of layers
-        addSelectedLayersIndicesToState(f.map((feature) => feature.layer.id)[0]);
+        handleSelectedChange(f.map((feature) => feature.layer.id)[0]);
       }
     });
   };
 
   const addLayer = (layers) => {
-    layers.forEach(layer => {
+    layers.forEach((layer) => {
       map.addSource(layer.id, {
         type: "geojson",
         data: layer,
@@ -60,7 +72,7 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
           "fill-opacity": 0.5,
         },
       });
-    })
+    });
   };
 
   const removeLayer = (layers) => {
@@ -74,7 +86,7 @@ const Map = ({ layers, addSelectedLayersIndicesToState }) => {
     return map
       .getStyle()
       .layers.filter((layer) => {
-        return layer.source !== "composite" && layer.type !== "background";
+        return (layer.source !== "composite" && layer.type !== "background") && layer.source !== "mapbox-gl-draw-cold" && layer.source !== "mapbox-gl-draw-hot";
       })
       .map((layer) => layer.id);
   };
