@@ -1,15 +1,36 @@
 import { ListItem } from "@material-ui/core";
 import React from "react";
-import { DeleteOutline } from "@material-ui/icons";
+import { DeleteOutline, CreateOutlined, VisibilityOutlined } from "@material-ui/icons";
 
-const LayerBar = ({ layers, removeLayerFromState }) => {
+const LayerBar = ({
+  layers,
+  removeLayerFromState,
+  selectedLayersIndices,
+  handleSelectedChange,
+}) => {
+  console.log(selectedLayersIndices);
   return (
     <div>
       {layers &&
         layers.map((layer) => {
           return (
-            <div className="layer-item">
-              <ListItem key={layer.id}>{layer.name}</ListItem>
+            <div
+              key={layer.id}
+              className={
+                selectedLayersIndices.indexOf(layer.id) === -1
+                  ? "layer-item"
+                  : "layer-item-selected"
+              }
+            >
+              <ListItem disableGutters
+                onClick={() => {
+                  handleSelectedChange(layer.id);
+                }}
+              >
+                {layer.name}
+              </ListItem>
+              <VisibilityOutlined />
+              <CreateOutlined />
               <DeleteOutline onClick={() => removeLayerFromState(layer.id)} />
             </div>
           );

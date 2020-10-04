@@ -1,7 +1,40 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import PublishIconLarge from "@material-ui/icons/Publish";
-import { ListItem } from "@material-ui/core";
+
+const baseStyle = {
+  flex: 1,
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  padding: "20px",
+  paddingLeft: "20px",
+  paddingRight: "20px",
+  borderWidth: 2,
+  borderRadius: 4,
+  borderColor: "black",
+  borderStyle: "solid",
+  backgroundColor: "#e7e7e7",
+  color: "black",
+  outline: "none",
+  justifyContent: "space-around",
+  //transition: "border .24s ease-in-out",
+  fontSize: "18px",
+};
+
+const activeStyle = {
+  backgroundColor: "#3a3a3a",
+  color: "white",
+};
+
+const acceptStyle = {
+  borderColor: "white",
+};
+
+const rejectStyle = {
+  borderColor: "white",
+  borderStyle: "solid"
+};
 
 function Dropzone({ addLayersToState, layers }) {
   const onDrop = useCallback(
@@ -24,25 +57,29 @@ function Dropzone({ addLayersToState, layers }) {
     [layers]
   );
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    accept: ".json",
-    onDrop,
-  });
+  const {
+    getRootProps,
+    getInputProps,
+    isDragActive,
+    isDragAccept,
+    isDragReject,
+  } = useDropzone({ accept: ".json", onDrop });
+
+  const style = useMemo(
+    () => ({
+      ...baseStyle,
+      ...(isDragActive ? activeStyle : {}),
+      ...(isDragAccept ? acceptStyle : {}),
+      ...(isDragReject ? rejectStyle : {}),
+    }),
+    [isDragActive, isDragReject, isDragAccept]
+  );
 
   return (
-    <div className="upload">
+    <div {...getRootProps({ style })}>
       <input {...getInputProps()} />
-      {!isDragActive ? (
-        <div className="upload" {...getRootProps()}>
-          <PublishIconLarge/>
-          <ListItem>Upload</ListItem>
-        </div>
-      ) : (
-        <div className="upload_drag" {...getRootProps()}>
-          <PublishIconLarge />
-          <ListItem>Upload</ListItem>
-        </div>
-      )}
+      <text>Upload Layers</text>
+      <PublishIconLarge />
     </div>
   );
 }

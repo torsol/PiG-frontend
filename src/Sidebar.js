@@ -2,10 +2,11 @@ import React from "react";
 import DropZone from "./DropZone";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
 import LayerBar from "./LayerBar";
 import LayersIcon from "@material-ui/icons/Layers";
 import FunctionsIcon from "@material-ui/icons/Functions";
+import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
+import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
 
 import {
   calculateBuffer,
@@ -13,8 +14,12 @@ import {
   calculateIntersection,
 } from "./utils/APIConnection";
 
-const HeadLine = ({ children }) => {
-  return (<div className="headLine">{children}<Divider /></div>)
+export const HeadLine = ({ children }) => {
+  return <div className="headLine">{children}</div>;
+};
+
+export const Operation = ({ children }) => {
+  return <div className="operation">{children}</div>;
 };
 
 const Sidebar = ({
@@ -23,7 +28,7 @@ const Sidebar = ({
   removeLayerFromState,
   layers,
   selectedLayersIndices,
-  removeSelectedLayersIndicesFromState,
+  handleSelectedChange,
 }) => {
   var selectedLayers = layers.filter(
     (layer) => selectedLayersIndices.indexOf(layer.id) !== -1
@@ -31,44 +36,61 @@ const Sidebar = ({
 
   return (
     <div className="sidebar">
-      <List disablePadding dense>
+      <List disablePadding>
         <HeadLine>
-          <ListItem>Operations</ListItem>
+          <ListItem disableGutters>Operations</ListItem>
           <FunctionsIcon />
         </HeadLine>
-        <ListItem onClick={calculateBuffer(addLayersToState, selectedLayers)}>
-          Buffer
+
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateBuffer(addLayersToState, selectedLayers)}
+          >
+            Buffer
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateUnion(addLayersToState, selectedLayers)}
+          >
+            Union
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateIntersection(addLayersToState, selectedLayers)}
+          >
+            Intersection
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem disableGutters onClick={removeLayersFromState}>
+            Remove layers
+          </ListItem>
+          <ClearOutlinedIcon />
+        </Operation>
+        <ListItem disableGutters>
+          <DropZone
+            accept="*.json"
+            addLayersToState={addLayersToState}
+            layers={layers}
+          />
         </ListItem>
-        <ListItem onClick={calculateUnion(addLayersToState, selectedLayers)}>
-          Union
-        </ListItem>
-        <ListItem
-          onClick={calculateIntersection(addLayersToState, selectedLayers)}
-        >
-          Intersection
-        </ListItem>
-        <ListItem onClick={removeLayersFromState}>Remove layers</ListItem>
-        <DropZone
-          accept="*.json"
-          addLayersToState={addLayersToState}
-          layers={layers}
-        />
         <HeadLine>
-          <ListItem>Layers</ListItem>
+          <ListItem disableGutters>Layers</ListItem>
           <LayersIcon />
         </HeadLine>
         <LayerBar
+          selectedLayersIndices={selectedLayersIndices}
           layers={layers}
-          removeLayersFromState={removeLayersFromState}
           removeLayerFromState={removeLayerFromState}
-        />
-        <HeadLine>
-          <ListItem>Selected Layers</ListItem>
-          <LayersIcon />
-        </HeadLine>
-        <LayerBar
-          layers={selectedLayers}
-          removeLayerFromState={removeSelectedLayersIndicesFromState}
+          handleSelectedChange={handleSelectedChange}
         />
       </List>
     </div>

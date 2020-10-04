@@ -61,19 +61,6 @@ const App = (props) => {
     };
   };
 
-  const removeSelectedLayersIndicesFromState = (
-    setSelectedLayersIndices,
-    selectedLayersIndices
-  ) => {
-    return (layerID) => {
-      var newLayers = selectedLayersIndices.filter((layer) => {
-        return layer !== layerID;
-      });
-      selectedLayersRef.current = newLayers;
-      setSelectedLayersIndices(newLayers);
-    };
-  };
-
   return (
     <div>
       <Sidebar
@@ -82,10 +69,7 @@ const App = (props) => {
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
         selectedLayersIndices={selectedLayersIndices}
-        removeSelectedLayersIndicesFromState={removeSelectedLayersIndicesFromState(
-          setSelectedLayersIndices,
-          selectedLayersIndices
-        )}
+        handleSelectedChange={handleSelectedChange()}
       />
       <Map
         layers={layers}
