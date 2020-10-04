@@ -16,7 +16,7 @@ const App = (props) => {
           operation + "_" + Math.random().toString(36).slice(2);
         newValue["color"] = getRandomColor(); //generates random color
       });
-      setLayers(layers => [...layers, ...newValues]);
+      setLayers((layers) => [...layers, ...newValues]);
     };
   };
 
@@ -28,13 +28,13 @@ const App = (props) => {
         console.log(selectedLayersRef.current);
         setSelectedLayersIndices(selectedLayersRef.current); // if not selected, add to state
       } else {
-        selectedLayersRef.current = selectedLayersRef.current.filter((indice) => {
-          // if selected, filter out of state
-          return indice !== selected;
-        })
-        setSelectedLayersIndices(
-          selectedLayersRef.current
+        selectedLayersRef.current = selectedLayersRef.current.filter(
+          (indice) => {
+            // if selected, filter out of state
+            return indice !== selected;
+          }
         );
+        setSelectedLayersIndices(selectedLayersRef.current);
       }
     };
   };
@@ -43,7 +43,7 @@ const App = (props) => {
     return () => {
       setSelectedLayersIndices([]);
       setLayers([]);
-      selectedLayersRef.current = []
+      selectedLayersRef.current = [];
     };
   };
 
@@ -55,8 +55,8 @@ const App = (props) => {
       var newSelectedIndices = selectedLayersRef.current.filter((layer) => {
         return layer !== layerID;
       });
-      setSelectedLayersIndices(newSelectedIndices)
-      selectedLayersRef.current = newSelectedIndices
+      setSelectedLayersIndices(newSelectedIndices);
+      selectedLayersRef.current = newSelectedIndices;
       setLayers(newLayers);
     };
   };
@@ -69,7 +69,7 @@ const App = (props) => {
       var newLayers = selectedLayersIndices.filter((layer) => {
         return layer !== layerID;
       });
-      selectedLayersRef.current = newLayers
+      selectedLayersRef.current = newLayers;
       setSelectedLayersIndices(newLayers);
     };
   };
