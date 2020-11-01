@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bc874501d8d74db318272ed5f60392be",
+    "revision": "03ce95fdf1cd582fff22bf60af687b3f",
     "url": "/PiG-frontend/index.html"
   },
   {
