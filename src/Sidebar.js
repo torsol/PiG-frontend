@@ -6,7 +6,7 @@ import LayerBar from "./LayerBar";
 import LayersIcon from "@material-ui/icons/Layers";
 import FunctionsIcon from "@material-ui/icons/Functions";
 import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
-import ClearOutlinedIcon from '@material-ui/icons/ClearOutlined';
+import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 
 import {
   calculateBuffer,
@@ -29,7 +29,9 @@ const Sidebar = ({
   layers,
   selectedLayersIndices,
   handleSelectedChange,
+  handleMetaChange,
 }) => {
+
   var selectedLayers = layers.filter(
     (layer) => selectedLayersIndices.indexOf(layer.id) !== -1
   ); // match selected indices with layers stored in state
@@ -91,6 +93,7 @@ const Sidebar = ({
           layers={layers}
           removeLayerFromState={removeLayerFromState}
           handleSelectedChange={handleSelectedChange}
+          handleMetaChange={handleMetaChange}
         />
       </List>
     </div>

@@ -39,6 +39,12 @@ const App = (props) => {
     };
   };
 
+  const handleMetaChange = (setLayers) => {
+    return(layerId, change) => {
+      setLayers((prevLayers) => prevLayers.map(layer => layer.id === layerId ? { ...layer, visibility: change }: layer))
+    }
+  };
+
   const removeLayersFromState = (setLayers) => {
     return () => {
       setSelectedLayersIndices([]);
@@ -70,6 +76,7 @@ const App = (props) => {
         layers={layers}
         selectedLayersIndices={selectedLayersIndices}
         handleSelectedChange={handleSelectedChange()}
+        handleMetaChange={handleMetaChange(setLayers)}
       />
       <Map
         layers={layers}

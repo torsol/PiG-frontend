@@ -7,6 +7,7 @@ const LayerBar = ({
   removeLayerFromState,
   selectedLayersIndices,
   handleSelectedChange,
+  handleMetaChange
 }) => {
   console.log(selectedLayersIndices);
   return (
@@ -29,7 +30,7 @@ const LayerBar = ({
               >
                 {layer.name}
               </ListItem>
-              <VisibilityOutlined />
+              <VisibilityOutlined onClick={() => handleMetaChange(layer.id, "test")}/>
               <CreateOutlined />
               <DeleteOutline onClick={() => removeLayerFromState(layer.id)} />
             </div>
