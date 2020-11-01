@@ -30,7 +30,7 @@ const LayerBar = ({
               >
                 {layer.name}
               </ListItem>
-              <VisibilityOutlined onClick={() => handleMetaChange(layer.id, "test")}/>
+              <VisibilityOutlined onClick={() => handleMetaChange(layer.id, 'none')}/>
               <CreateOutlined />
               <DeleteOutline onClick={() => removeLayerFromState(layer.id)} />
             </div>

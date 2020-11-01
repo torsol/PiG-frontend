@@ -73,7 +73,9 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
         id: layer.id,
         type: "fill",
         source: layer.id,
-        layout: {},
+        layout: {
+          'visibility': 'visible',
+        },
         paint: {
           "fill-color": layer.color,
           "fill-opacity": 0.7,
@@ -103,6 +105,13 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
       .map((layer) => layer.id);
   };
 
+  const updateVisibility = (layers) => {
+    layers.forEach(layer => {
+      var visibility = map.getLayoutProperty(layer.id, 'visibility');
+      if (visibility !== layer.visibility) map.setLayoutProperty(layer.id, 'visibility', layer.visibility)
+    })
+  }
+
   const handleLayerUpdate = (layers, map) => {
     const currentLayers = getCurrentLayerIDs(map);
 
@@ -118,6 +127,8 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
 
     if (addable[0]) addLayer(addable);
     if (removable[0]) removeLayer(removable);
+
+    updateVisibility(layers)
   };
 
   // render map on initial load
