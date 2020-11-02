@@ -1,6 +1,6 @@
 import { ListItem } from "@material-ui/core";
 import React from "react";
-import { DeleteOutline, CreateOutlined, VisibilityOutlined } from "@material-ui/icons";
+import { DeleteOutline, CreateOutlined, VisibilityOutlined, VisibilityOffOutlined } from "@material-ui/icons";
 
 const LayerBar = ({
   layers,
@@ -30,7 +30,9 @@ const LayerBar = ({
               >
                 {layer.name}
               </ListItem>
+              {layer.visibility !== 'none' ? 
               <VisibilityOutlined onClick={() => handleMetaChange(layer.id, 'none')}/>
+              : <VisibilityOffOutlined onClick={() => handleMetaChange(layer.id, 'visible')}></VisibilityOffOutlined>}
               <CreateOutlined />
               <DeleteOutline onClick={() => removeLayerFromState(layer.id)} />
             </div>
