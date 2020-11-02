@@ -8,8 +8,8 @@ import {
   VisibilityOffOutlined,
 } from "@material-ui/icons";
 
-const InputField = () => {
-  return <input type="text"></input>;
+const InputField = ({value, handleChange}) => {
+  return <input type="text" value={value} onChange={handleChange}></input>;
 };
 
 const Layer = ({
@@ -20,6 +20,12 @@ const Layer = ({
   handleMetaChange,
 }) => {
   const [inputBox, setInputBox] = useState(false);
+  const [layerName, setLayerName] = useState(layer.name)
+
+  const handleNameChange = (event) => {
+    setLayerName(event.target.value)
+  }
+
 
   return (
     <div
@@ -33,17 +39,19 @@ const Layer = ({
       {inputBox ? (
         <React.Fragment>
           <ListItem disableGutters>
-            <InputField />
+            <InputField value={layerName} handleChange={handleNameChange}/>
           </ListItem>
           <ClearOutlined
             onClick={() => {
+              setLayerName(layer.name)
               setInputBox(false);
             }}
           />
           <CheckOutlined
             onClick={() => {
               setInputBox(false);
-            }}
+              handleMetaChange(layer.id, "name", layerName)}
+            }
           />
         </React.Fragment>
       ) : (
@@ -58,11 +66,11 @@ const Layer = ({
           </ListItem>
           {layer.visibility !== "none" ? (
             <VisibilityOutlined
-              onClick={() => handleMetaChange(layer.id, "none")}
+              onClick={() => handleMetaChange(layer.id, "visibility", "none")}
             />
           ) : (
             <VisibilityOffOutlined
-              onClick={() => handleMetaChange(layer.id, "visible")}
+              onClick={() => handleMetaChange(layer.id, "visibility", "visible")}
             ></VisibilityOffOutlined>
           )}
           <CreateOutlined onClick={() => setInputBox(true)} />

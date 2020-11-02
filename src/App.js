@@ -40,8 +40,9 @@ const App = (props) => {
   };
 
   const handleMetaChange = (setLayers) => {
-    return(layerId, change) => {
-      setLayers((prevLayers) => prevLayers.map(layer => layer.id === layerId ? { ...layer, visibility: change }: layer))
+    return(layerId, key, change) => {
+      console.log(key, change)
+      setLayers((prevLayers) => prevLayers.map(layer => layer.id === layerId ? { ...layer, [key]: change }: layer))
     }
   };
 
