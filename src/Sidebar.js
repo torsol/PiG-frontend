@@ -27,15 +27,12 @@ const Sidebar = ({
   removeLayersFromState,
   removeLayerFromState,
   layers,
-  selectedLayersIndices,
-  handleSelectedChange,
   handleMetaChange,
 }) => {
 
   var selectedLayers = layers.filter(
-    (layer) => selectedLayersIndices.indexOf(layer.id) !== -1
-  ); // match selected indices with layers stored in state
-
+    (layer) => layer.selected
+  );
   return (
     <div className="sidebar">
       <List disablePadding>
@@ -89,10 +86,8 @@ const Sidebar = ({
           <LayersIcon />
         </HeadLine>
         <LayerBar
-          selectedLayersIndices={selectedLayersIndices}
           layers={layers}
           removeLayerFromState={removeLayerFromState}
-          handleSelectedChange={handleSelectedChange}
           handleMetaChange={handleMetaChange}
         />
       </List>

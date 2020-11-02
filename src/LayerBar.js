@@ -15,8 +15,6 @@ const InputField = ({value, handleChange}) => {
 const Layer = ({
   layer,
   removeLayerFromState,
-  selectedLayersIndices,
-  handleSelectedChange,
   handleMetaChange,
 }) => {
   const [inputBox, setInputBox] = useState(false);
@@ -31,7 +29,7 @@ const Layer = ({
     <div
       key={layer.id}
       className={
-        selectedLayersIndices.indexOf(layer.id) === -1
+        !layer.selected
           ? "layer-item"
           : "layer-item-selected"
       }
@@ -59,7 +57,7 @@ const Layer = ({
           <ListItem
             disableGutters
             onClick={() => {
-              handleSelectedChange(layer.id);
+              handleMetaChange(layer.id, "selected", !layer.selected);
             }}
           >
             {layer.name}

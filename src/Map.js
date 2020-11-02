@@ -6,7 +6,7 @@ import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
+const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange }) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -58,7 +58,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState }) => {
       });
       if (f.length) {
         // if you have clicked a number of layers
-        handleSelectedChange(f.map((feature) => feature.layer.id)[0]);
+        handleMetaChange(f.map((feature) => feature.layer.id)[0], "selected");
       }
     });
   };

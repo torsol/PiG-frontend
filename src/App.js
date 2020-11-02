@@ -5,8 +5,6 @@ import { getRandomColor } from "./utils/RandomColor";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
-  const [selectedLayersIndices, setSelectedLayersIndices] = useState([]);
-  const selectedLayersRef = useRef(selectedLayersIndices);
 
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
@@ -20,37 +18,28 @@ const App = (props) => {
     };
   };
 
-  const handleSelectedChange = () => {
-    return (selected) => {
-      console.log(selected);
-      if (selectedLayersRef.current.indexOf(selected) === -1) {
-        selectedLayersRef.current = [...selectedLayersRef.current, selected];
-        console.log(selectedLayersRef.current);
-        setSelectedLayersIndices(selectedLayersRef.current); // if not selected, add to state
-      } else {
-        selectedLayersRef.current = selectedLayersRef.current.filter(
-          (indice) => {
-            // if selected, filter out of state
-            return indice !== selected;
-          }
-        );
-        setSelectedLayersIndices(selectedLayersRef.current);
-      }
-    };
-  };
-
   const handleMetaChange = (setLayers) => {
-    return(layerId, key, change) => {
-      console.log(key, change)
-      setLayers((prevLayers) => prevLayers.map(layer => layer.id === layerId ? { ...layer, [key]: change }: layer))
-    }
+    return (layerId, key, change) => {
+      console.log(layerId, key, change);
+      !change && key == "selected"
+        ? setLayers((prevLayers) =>
+            prevLayers.map((layer) =>
+              layer.id === layerId
+                ? { ...layer, [key]: !layer.selected }
+                : layer
+            )
+          )
+        : setLayers((prevLayers) =>
+            prevLayers.map((layer) =>
+              layer.id === layerId ? { ...layer, [key]: change } : layer
+            )
+          );
+    };
   };
 
   const removeLayersFromState = (setLayers) => {
     return () => {
-      setSelectedLayersIndices([]);
       setLayers([]);
-      selectedLayersRef.current = [];
     };
   };
 
@@ -59,11 +48,6 @@ const App = (props) => {
       var newLayers = layers.filter((layer) => {
         return layer.id !== layerID;
       });
-      var newSelectedIndices = selectedLayersRef.current.filter((layer) => {
-        return layer !== layerID;
-      });
-      setSelectedLayersIndices(newSelectedIndices);
-      selectedLayersRef.current = newSelectedIndices;
       setLayers(newLayers);
     };
   };
@@ -75,14 +59,12 @@ const App = (props) => {
         removeLayersFromState={removeLayersFromState(setLayers)}
         removeLayerFromState={removeLayerFromState(setLayers, layers)}
         layers={layers}
-        selectedLayersIndices={selectedLayersIndices}
-        handleSelectedChange={handleSelectedChange()}
         handleMetaChange={handleMetaChange(setLayers)}
       />
       <Map
         layers={layers}
-        handleSelectedChange={handleSelectedChange()}
         addLayersToState={addLayersToState(setLayers)}
+        handleMetaChange={handleMetaChange(setLayers)}
       />
     </div>
   );
