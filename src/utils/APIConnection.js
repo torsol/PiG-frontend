@@ -20,9 +20,9 @@ function concatGeoJSON(list) {
   return newGeoJSON;
 }
 
-export function calculateBuffer(addLayersToState, inputData) {
+export function calculateBuffer(addLayersToState, inputData, value) {
   let requestData = concatGeoJSON(inputData);
-  requestData["value"] = 10;
+  requestData["value"] = value;
 
   return function () {
     axios

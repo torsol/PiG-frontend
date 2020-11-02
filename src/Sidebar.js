@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import DropZone from "./DropZone";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -7,6 +7,8 @@ import LayersIcon from "@material-ui/icons/Layers";
 import FunctionsIcon from "@material-ui/icons/Functions";
 import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
+import InputField from "./components/InputField";
+import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
 
 import {
   calculateBuffer,
@@ -29,10 +31,21 @@ const Sidebar = ({
   layers,
   handleMetaChange,
 }) => {
+  var selectedLayers = layers.filter((layer) => layer.selected);
 
-  var selectedLayers = layers.filter(
-    (layer) => layer.selected
-  );
+  const [bufferSelected, setBufferSelected] = useState(false);
+  const [bufferValue, setBufferValue] = useState(10);
+
+  const handleBufferValueChange = (event) => {
+    setBufferValue(event.target.value);
+  };
+
+  const onclickBuffer = () => {
+    calculateBuffer(addLayersToState, selectedLayers, bufferValue)();
+    setBufferSelected(false);
+    console.log()
+  };
+
   return (
     <div className="sidebar">
       <List disablePadding>
@@ -42,13 +55,23 @@ const Sidebar = ({
         </HeadLine>
 
         <Operation>
-          <ListItem
-            disableGutters
-            onClick={calculateBuffer(addLayersToState, selectedLayers)}
-          >
-            Buffer
-          </ListItem>
-          <ArrowForward />
+          {!bufferSelected ? (
+            <React.Fragment>
+              <ListItem disableGutters onClick={() => setBufferSelected(true)}>
+                Buffer
+              </ListItem>
+              <ArrowForward />
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <InputField
+                value={bufferValue}
+                handleChange={handleBufferValueChange}
+              />
+              <ClearOutlined onClick={() => setBufferSelected(false)} />
+              <CheckOutlined onClick={onclickBuffer} />
+            </React.Fragment>
+          )}
         </Operation>
         <Operation>
           <ListItem
@@ -70,7 +93,7 @@ const Sidebar = ({
         </Operation>
         <Operation>
           <ListItem disableGutters onClick={removeLayersFromState}>
-            Remove layers
+            Remove All Layers
           </ListItem>
           <ClearOutlinedIcon />
         </Operation>

@@ -52,7 +52,6 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
     });
 
     initial_map.on("click", (e) => {
-      console.log(e);
       let f = initial_map.queryRenderedFeatures(e.point, {
         layers: getCurrentLayerIDs(initial_map),
       });

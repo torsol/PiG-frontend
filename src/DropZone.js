@@ -78,7 +78,7 @@ function Dropzone({ addLayersToState, layers }) {
   return (
     <div {...getRootProps({ style })}>
       <input {...getInputProps()} />
-      <text>Upload Layers</text>
+      Upload Layers
       <PublishIconLarge />
     </div>
   );

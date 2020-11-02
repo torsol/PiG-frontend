@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
@@ -20,8 +20,7 @@ const App = (props) => {
 
   const handleMetaChange = (setLayers) => {
     return (layerId, key, change) => {
-      console.log(layerId, key, change);
-      !change && key == "selected"
+      !change && key === "selected"
         ? setLayers((prevLayers) =>
             prevLayers.map((layer) =>
               layer.id === layerId
