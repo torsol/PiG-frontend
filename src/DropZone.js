@@ -63,7 +63,7 @@ function Dropzone({ addLayersToState, layers }) {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: ".json", onDrop });
+  } = useDropzone({ accept: [".json", ".geojson"], onDrop });
 
   const style = useMemo(
     () => ({

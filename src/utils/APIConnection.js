@@ -1,8 +1,7 @@
 import axios from "axios";
 
-
-//const HOST = "http://10.53.26.143:5000"
-const HOST = "https://tba4251-api.herokuapp.com/"
+const HOST = "http://localhost:5000";
+//const HOST = "https://tba4251-api.herokuapp.com/"
 
 function concatGeoJSON(list) {
   // used to combine features into one geojson for backend processing
@@ -18,6 +17,21 @@ function concatGeoJSON(list) {
   };
 
   return newGeoJSON;
+}
+
+function splitGeoJSON(response) {
+  // used to combine features into one geojson for backend processing
+  let layers = [];
+
+  response.features.forEach((feature) => {
+    let newGeoJSON = {
+      type: "FeatureCollection",
+      features: [feature],
+    };
+
+    layers = layers.concat(newGeoJSON);
+  });
+  return layers;
 }
 
 export function calculateBuffer(addLayersToState, inputData, value) {
@@ -95,6 +109,30 @@ export function calculateBoundingBox(addLayersToState, inputData) {
 export function calculateDissolve(addLayersToState, inputData) {
   return function () {
     let requestData = concatGeoJSON(inputData);
-    addLayersToState([requestData], "dissolve")
-  }
+    axios
+      .post(HOST + "/api/dissolve", requestData)
+      .then((response) => {
+        addLayersToState([response.data], "dissolve");
+      })
+      .catch(function (error) {
+        // manipulate the error response here
+      });
+  };
+}
+
+export function calculateSplitGeoJSON(addLayersToState, inputData) {
+  return function () {
+    // used to combine features into one geojson for backend processing
+    let layers = [];
+    console.log(inputData)
+    inputData[0].features.forEach((feature) => {
+      let newGeoJSON = {
+        type: "FeatureCollection",
+        features: [feature],
+      };
+
+      layers = layers.concat(newGeoJSON);
+    });
+    addLayersToState(layers, "split");
+  };
 }

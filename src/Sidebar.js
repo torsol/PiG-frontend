@@ -14,8 +14,9 @@ import {
   calculateUnion,
   calculateIntersection,
   calculateSymmetricDifference,
-  calculateBoundingBox, 
-  calculateDissolve
+  calculateBoundingBox,
+  calculateDissolve, 
+  calculateSplitGeoJSON
 } from "./utils/APIConnection";
 
 export const HeadLine = ({ children }) => {
@@ -86,18 +87,28 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateIntersection(addLayersToState, selectedLayers)}
+            onClick={calculateDissolve(addLayersToState, selectedLayers)}
           >
-            Intersection
+            Dissolve
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
+          >
+            Split
           </ListItem>
           <ArrowForward />
         </Operation>
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateDissolve(addLayersToState, selectedLayers)}
+            onClick={calculateIntersection(addLayersToState, selectedLayers)}
           >
-            Dissolve
+            Intersection
           </ListItem>
           <ArrowForward />
         </Operation>

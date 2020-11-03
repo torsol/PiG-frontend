@@ -78,6 +78,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
         paint: {
           "fill-color": layer.color,
           "fill-opacity": 0.7,
+          "fill-outline-color": layer.color,
         },
       });
     });
@@ -111,6 +112,13 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
     })
   }
 
+  const updateSelectedOutline = (layers) => {
+    layers.forEach(layer => {
+      layer.selected ? map.setPaintProperty(layer.id, 'fill-outline-color', "#000000")
+      : map.setPaintProperty(layer.id, 'fill-outline-color', layer.color)
+    })
+  }
+
   const handleLayerUpdate = (layers, map) => {
     const currentLayers = getCurrentLayerIDs(map);
 
@@ -128,6 +136,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
     if (removable[0]) removeLayer(removable);
 
     updateVisibility(layers)
+    updateSelectedOutline(layers)
   };
 
   // render map on initial load
@@ -137,10 +146,10 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
   }, [map]);
 
   useEffect(() => {
-    console.log("Map", "Layers handled");
     // eslint-disable-next-line
     if (map) handleLayerUpdate(layers, map);
     // eslint-disable-next-line
+    console.log("Map", "Layers handled");
   }, [layers]);
 
   return (
