@@ -9,11 +9,13 @@ import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import InputField from "./components/InputField";
 import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
-
 import {
   calculateBuffer,
   calculateUnion,
   calculateIntersection,
+  calculateSymmetricDifference,
+  calculateBoundingBox, 
+  calculateDissolve
 } from "./utils/APIConnection";
 
 export const HeadLine = ({ children }) => {
@@ -43,7 +45,6 @@ const Sidebar = ({
   const onclickBuffer = () => {
     calculateBuffer(addLayersToState, selectedLayers, bufferValue)();
     setBufferSelected(false);
-    console.log()
   };
 
   return (
@@ -88,6 +89,33 @@ const Sidebar = ({
             onClick={calculateIntersection(addLayersToState, selectedLayers)}
           >
             Intersection
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateDissolve(addLayersToState, selectedLayers)}
+          >
+            Dissolve
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateBoundingBox(addLayersToState, selectedLayers)}
+          >
+            Bounding Box
+          </ListItem>
+          <ArrowForward />
+        </Operation>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={calculateSymmetricDifference(addLayersToState, selectedLayers)}
+          >
+            Symmetric Difference
           </ListItem>
           <ArrowForward />
         </Operation>

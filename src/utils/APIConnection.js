@@ -63,3 +63,38 @@ export function calculateIntersection(addLayersToState, inputData) {
       });
   };
 }
+
+export function calculateSymmetricDifference(addLayersToState, inputData) {
+  return function () {
+    let requestData = concatGeoJSON(inputData);
+    axios
+      .post(HOST + "/api/symmetric_difference", requestData)
+      .then((response) => {
+        addLayersToState([response.data], "difference");
+      })
+      .catch(function (error) {
+        // manipulate the error response here
+      });
+  };
+}
+
+export function calculateBoundingBox(addLayersToState, inputData) {
+  return function () {
+    let requestData = concatGeoJSON(inputData);
+    axios
+      .post(HOST + "/api/bbox", requestData)
+      .then((response) => {
+        addLayersToState([response.data], "bbox");
+      })
+      .catch(function (error) {
+        // manipulate the error response here
+      });
+  };
+}
+
+export function calculateDissolve(addLayersToState, inputData) {
+  return function () {
+    let requestData = concatGeoJSON(inputData);
+    addLayersToState([requestData], "dissolve")
+  }
+}

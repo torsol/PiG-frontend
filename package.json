@@ -1,6 +1,5 @@
 {
     "name": "frontend",
-    "homepage": "https://blog.solberg.ws/PiG-frontend/",
     "version": "0.0.1",
     "dependencies": {
         "@mapbox/mapbox-gl-draw": "^1.2.0",
