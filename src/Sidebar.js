@@ -30,11 +30,13 @@ const Sidebar = ({
   removeLayerFromState,
   layers,
   handleMetaChange,
+  draw,
 }) => {
   var selectedLayers = layers.filter((layer) => layer.selected);
 
   const [bufferSelected, setBufferSelected] = useState(false);
   const [bufferValue, setBufferValue] = useState(10);
+  console.log(draw);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const layerOperation = getOperationFunction(
@@ -62,6 +64,18 @@ const Sidebar = ({
           <ListItem disableGutters>Operations</ListItem>
           <FunctionsIcon />
         </HeadLine>
+        <Operation>
+          <ListItem
+            disableGutters
+            onClick={() => {
+              console.log(draw);
+              draw.changeMode("draw_polygon");
+            }}
+          >
+            Draw Polygon
+          </ListItem>
+          <ArrowForward />
+        </Operation>
 
         <Operation>
           {!bufferSelected ? (

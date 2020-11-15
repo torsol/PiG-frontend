@@ -1,12 +1,17 @@
 import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
-import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
-const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange }) => {
+const Map = ({
+  layers,
+  handleSelectedChange,
+  addLayersToState,
+  handleMetaChange,
+  draw,
+}) => {
   // react hooks for storing the map
   const [map, setMap] = useState(null);
   const mapContainer = useRef(null);
@@ -23,30 +28,20 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
       center: [lng, lat],
       zoom: zoom,
     });
-
-    var draw = new MapboxDraw({
-      displayControlsDefault: false,
-      controls: {
-        point: false,
-        line_string: false,
-        polygon: true
-      },
-    });
-
-    initial_map.addControl(draw, "top-right");
-
-    initial_map.on("draw.create", onCreation);
     //initial_map.on("draw.delete", updateArea);
     //initial_map.on("draw.update", updateArea);
 
     function onCreation(e) {
       var data = draw.getAll();
-      addLayersToState([data], 'drawTool');
+      addLayersToState([data], "drawTool");
       draw.deleteAll();
+      console.log(draw);
     }
 
     initial_map.on("load", () => {
       setMap(initial_map);
+      initial_map.addControl(draw);
+      initial_map.on("draw.create", onCreation);
 
       initial_map.resize();
     });
@@ -57,6 +52,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
       });
       if (f.length) {
         // if you have clicked a number of layers
+        draw.changeMode("draw_polygon");
         handleMetaChange(f.map((feature) => feature.layer.id)[0], "selected");
       }
     });
@@ -73,7 +69,7 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
         type: "fill",
         source: layer.id,
         layout: {
-          'visibility': 'visible',
+          visibility: "visible",
         },
         paint: {
           "fill-color": layer.color,
@@ -106,18 +102,20 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
   };
 
   const updateVisibility = (layers) => {
-    layers.forEach(layer => {
-      var visibility = map.getLayoutProperty(layer.id, 'visibility');
-      if (visibility !== layer.visibility) map.setLayoutProperty(layer.id, 'visibility', layer.visibility)
-    })
-  }
+    layers.forEach((layer) => {
+      var visibility = map.getLayoutProperty(layer.id, "visibility");
+      if (visibility !== layer.visibility)
+        map.setLayoutProperty(layer.id, "visibility", layer.visibility);
+    });
+  };
 
   const updateSelectedOutline = (layers) => {
-    layers.forEach(layer => {
-      layer.selected ? map.setPaintProperty(layer.id, 'fill-outline-color', "#000000")
-      : map.setPaintProperty(layer.id, 'fill-outline-color', layer.color)
-    })
-  }
+    layers.forEach((layer) => {
+      layer.selected
+        ? map.setPaintProperty(layer.id, "fill-outline-color", "#000000")
+        : map.setPaintProperty(layer.id, "fill-outline-color", layer.color);
+    });
+  };
 
   const handleLayerUpdate = (layers, map) => {
     const currentLayers = getCurrentLayerIDs(map);
@@ -135,8 +133,8 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
     if (addable[0]) addLayer(addable);
     if (removable[0]) removeLayer(removable);
 
-    updateVisibility(layers)
-    updateSelectedOutline(layers)
+    updateVisibility(layers);
+    updateSelectedOutline(layers);
   };
 
   // render map on initial load

@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { SnackbarProvider } from 'notistack';
+import { SnackbarProvider } from "notistack";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
-import {pingApi} from "./utils/APIConnection";
-import { useSnackbar } from 'notistack';
+import { pingApi } from "./utils/APIConnection";
+import { useSnackbar } from "notistack";
+import MapboxDraw from "@mapbox/mapbox-gl-draw";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
+
+  const draw = new MapboxDraw({
+    displayControlsDefault: false,
+    controls: {
+      point: false,
+      line_string: false,
+      polygon: false,
+    },
+  });
 
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
@@ -57,19 +67,21 @@ const App = (props) => {
   return (
     <SnackbarProvider maxSnack={3}>
       <div>
-      <Sidebar
-        addLayersToState={addLayersToState(setLayers)}
-        removeLayersFromState={removeLayersFromState(setLayers)}
-        removeLayerFromState={removeLayerFromState(setLayers, layers)}
-        layers={layers}
-        handleMetaChange={handleMetaChange(setLayers)}
-      />
-      <Map
-        layers={layers}
-        addLayersToState={addLayersToState(setLayers)}
-        handleMetaChange={handleMetaChange(setLayers)}
-      />
-    </div>
+        <Sidebar
+          addLayersToState={addLayersToState(setLayers)}
+          removeLayersFromState={removeLayersFromState(setLayers)}
+          removeLayerFromState={removeLayerFromState(setLayers, layers)}
+          layers={layers}
+          handleMetaChange={handleMetaChange(setLayers)}
+          draw={draw}
+        />
+        <Map
+          layers={layers}
+          addLayersToState={addLayersToState(setLayers)}
+          handleMetaChange={handleMetaChange(setLayers)}
+          draw={draw}
+        />
+      </div>
     </SnackbarProvider>
   );
 };
