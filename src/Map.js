@@ -27,8 +27,8 @@ const Map = ({ layers, handleSelectedChange, addLayersToState, handleMetaChange 
     var draw = new MapboxDraw({
       displayControlsDefault: false,
       controls: {
-        point: true,
-        line_string: true,
+        point: false,
+        line_string: false,
         polygon: true
       },
     });

@@ -60,7 +60,7 @@ const Sidebar = ({
           {!bufferSelected ? (
             <React.Fragment>
               <ListItem disableGutters onClick={() => setBufferSelected(true)}>
-                Buffer
+                Featurewise Buffer
               </ListItem>
               <ArrowForward />
             </React.Fragment>
@@ -80,7 +80,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateUnion(addLayersToState, selectedLayers)}
           >
-            Union
+            N-wise Union
           </ListItem>
           <ArrowForward />
         </Operation>
@@ -89,7 +89,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateDissolve(addLayersToState, selectedLayers)}
           >
-            Dissolve
+            N-wise Dissolve
           </ListItem>
           <ArrowForward />
         </Operation>
@@ -99,7 +99,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
           >
-            Split
+            Featurewise Split
           </ListItem>
           <ArrowForward />
         </Operation>
@@ -108,7 +108,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateIntersection(addLayersToState, selectedLayers)}
           >
-            Intersection
+            Pairwise Intersection
           </ListItem>
           <ArrowForward />
         </Operation>
@@ -117,7 +117,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateBoundingBox(addLayersToState, selectedLayers)}
           >
-            Bounding Box
+            Featurewise Bounding Box
           </ListItem>
           <ArrowForward />
         </Operation>
@@ -126,7 +126,7 @@ const Sidebar = ({
             disableGutters
             onClick={calculateSymmetricDifference(addLayersToState, selectedLayers)}
           >
-            Symmetric Difference
+            Pairwise Symmetric Difference
           </ListItem>
           <ArrowForward />
         </Operation>
