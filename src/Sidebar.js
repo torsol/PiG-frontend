@@ -20,8 +20,12 @@ export const HeadLine = ({ children }) => {
   return <div className="headLine">{children}</div>;
 };
 
-export const Operation = ({ children }) => {
-  return <div className="operation">{children}</div>;
+export const Operation = ({ children, onClick }) => {
+  return (
+    <div className="operation" onClick={onClick}>
+      {children}
+    </div>
+  );
 };
 
 const Sidebar = ({
@@ -63,12 +67,13 @@ const Sidebar = ({
           <ListItem disableGutters>Operations</ListItem>
           <FunctionsIcon />
         </HeadLine>
-        <Operation>
+        <Operation
+          onClick={() => {
+            setDraw((draw) => draw.changeMode("draw_polygon"));
+          }}
+        >
           <ListItem
             disableGutters
-            onClick={() => {
-              setDraw(draw => draw.changeMode('draw_polygon'))
-            }}
           >
             Draw Polygon
           </ListItem>

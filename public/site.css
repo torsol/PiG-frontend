@@ -49,6 +49,15 @@
 .operation {
     display: flex;
     align-items: center;
+    cursor: pointer;
+}
+
+.operation:hover{
+    display: flex;
+    align-items: center;
+    background-color: rgb(98, 99, 99);
+    cursor: pointer;
+    color: white;
 }
 
 .ListItem{
