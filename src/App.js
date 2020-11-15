@@ -3,6 +3,8 @@ import { SnackbarProvider } from 'notistack';
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
+import {pingApi} from "./utils/APIConnection";
+import { useSnackbar } from 'notistack';
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);

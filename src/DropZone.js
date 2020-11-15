@@ -36,8 +36,8 @@ const rejectStyle = {
   borderStyle: "solid"
 };
 
-function Dropzone({ addLayersToState, layers }) {
-  const onDrop = useCallback(
+function Dropzone({ addLayersToState, layers, enqueueSnackbar }) {
+  const onDropAccepted = useCallback(
     (acceptedFiles) => {
       let promises = [];
       for (let file of acceptedFiles) {
@@ -51,7 +51,16 @@ function Dropzone({ addLayersToState, layers }) {
 
       Promise.all(promises).then((files) => {
         addLayersToState(files, "upload");
+        enqueueSnackbar("Successfully added layers to state", { variant: "success"})
       });
+    },
+    //eslint-disable-next-line
+    [layers]
+  );
+
+  const onDropRejected = useCallback(
+    (rectedFiles) => {
+        enqueueSnackbar("Error adding selected layers, try a valid geojson- or json-file", { variant: "error"})
     },
     //eslint-disable-next-line
     [layers]
@@ -63,7 +72,7 @@ function Dropzone({ addLayersToState, layers }) {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: [".json", ".geojson"], onDrop });
+  } = useDropzone({ accept: [".json", ".geojson"], onDropAccepted, onDropRejected});
 
   const style = useMemo(
     () => ({

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DropZone from "./DropZone";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
@@ -9,10 +9,11 @@ import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import InputField from "./components/InputField";
 import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
-import { useSnackbar } from 'notistack';
+import { useSnackbar } from "notistack";
 import {
   calculateSplitGeoJSON,
-  getOperationFunction
+  getOperationFunction,
+  pingApi,
 } from "./utils/APIConnection";
 
 export const HeadLine = ({ children }) => {
@@ -36,7 +37,14 @@ const Sidebar = ({
   const [bufferValue, setBufferValue] = useState(10);
 
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const layerOperation = getOperationFunction(enqueueSnackbar, addLayersToState);
+  const layerOperation = getOperationFunction(
+    enqueueSnackbar,
+    addLayersToState
+  );
+
+  useEffect(() => {
+    pingApi(enqueueSnackbar);
+  }, []);
 
   const handleBufferValueChange = (event) => {
     setBufferValue(event.target.value);
@@ -123,7 +131,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={layerOperation(selectedLayers, "difference")}
+            onClick={layerOperation(selectedLayers, "symmetric_difference")}
           >
             Pairwise Symmetric Difference
           </ListItem>
@@ -140,6 +148,7 @@ const Sidebar = ({
             accept="*.json"
             addLayersToState={addLayersToState}
             layers={layers}
+            enqueueSnackbar={enqueueSnackbar}
           />
         </ListItem>
         <HeadLine>

@@ -19,6 +19,18 @@ function concatGeoJSON(list) {
   return newGeoJSON;
 }
 
+export function pingApi(enqueueSnackbar){
+  axios
+      .get(HOST + "ping")
+      .then((response) => {
+        enqueueSnackbar("Successfully connected with backend", { variant: "success"})
+      })
+      .catch(function (error) {
+        enqueueSnackbar("Failed to connect with backend", { variant: "success"})
+        // manipulate the error response here
+      });
+}
+
 export function getOperationFunction(enqueueSnackbar, addLayersToState) {
   return function(inputData, operation, value){
     let requestData = concatGeoJSON(inputData);
@@ -28,6 +40,7 @@ export function getOperationFunction(enqueueSnackbar, addLayersToState) {
       axios
       .post(HOST + operation, requestData)
       .then((response) => {
+        if(operation=="symmetric_difference") operation = "sym_diff"
         addLayersToState([response.data], operation);
         enqueueSnackbar("Successfully computed " + operation, { variant: "success"})
       })
