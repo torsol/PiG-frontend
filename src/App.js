@@ -10,14 +10,16 @@ import MapboxDraw from "@mapbox/mapbox-gl-draw";
 const App = (props) => {
   const [layers, setLayers] = useState([]);
 
-  const draw = new MapboxDraw({
-    displayControlsDefault: false,
-    controls: {
-      point: false,
-      line_string: false,
-      polygon: false,
-    },
-  });
+  const [draw, setDraw] = useState(
+    new MapboxDraw({
+      displayControlsDefault: false,
+      controls: {
+        point: false,
+        line_string: false,
+        polygon: false,
+      },
+    })
+  );
 
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
@@ -73,7 +75,7 @@ const App = (props) => {
           removeLayerFromState={removeLayerFromState(setLayers, layers)}
           layers={layers}
           handleMetaChange={handleMetaChange(setLayers)}
-          draw={draw}
+          setDraw={setDraw}
         />
         <Map
           layers={layers}

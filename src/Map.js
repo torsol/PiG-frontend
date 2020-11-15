@@ -52,7 +52,6 @@ const Map = ({
       });
       if (f.length) {
         // if you have clicked a number of layers
-        draw.changeMode("draw_polygon");
         handleMetaChange(f.map((feature) => feature.layer.id)[0], "selected");
       }
     });
