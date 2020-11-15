@@ -9,14 +9,10 @@ import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import InputField from "./components/InputField";
 import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
+import { useSnackbar } from 'notistack';
 import {
-  calculateBuffer,
-  calculateUnion,
-  calculateIntersection,
-  calculateSymmetricDifference,
-  calculateBoundingBox,
-  calculateDissolve, 
-  calculateSplitGeoJSON
+  calculateSplitGeoJSON,
+  getOperationFunction
 } from "./utils/APIConnection";
 
 export const HeadLine = ({ children }) => {
@@ -39,12 +35,15 @@ const Sidebar = ({
   const [bufferSelected, setBufferSelected] = useState(false);
   const [bufferValue, setBufferValue] = useState(10);
 
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const layerOperation = getOperationFunction(enqueueSnackbar, addLayersToState);
+
   const handleBufferValueChange = (event) => {
     setBufferValue(event.target.value);
   };
 
   const onclickBuffer = () => {
-    calculateBuffer(addLayersToState, selectedLayers, bufferValue)();
+    layerOperation(selectedLayers, "buffer", bufferValue)();
     setBufferSelected(false);
   };
 
@@ -78,7 +77,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateUnion(addLayersToState, selectedLayers)}
+            onClick={layerOperation(selectedLayers, "union")}
           >
             N-wise Union
           </ListItem>
@@ -87,7 +86,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateDissolve(addLayersToState, selectedLayers)}
+            onClick={layerOperation(selectedLayers, "dissolve")}
           >
             N-wise Dissolve
           </ListItem>
@@ -106,7 +105,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateIntersection(addLayersToState, selectedLayers)}
+            onClick={layerOperation(selectedLayers, "intersection")}
           >
             Pairwise Intersection
           </ListItem>
@@ -115,7 +114,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateBoundingBox(addLayersToState, selectedLayers)}
+            onClick={layerOperation(selectedLayers, "bbox")}
           >
             Featurewise Bounding Box
           </ListItem>
@@ -124,7 +123,7 @@ const Sidebar = ({
         <Operation>
           <ListItem
             disableGutters
-            onClick={calculateSymmetricDifference(addLayersToState, selectedLayers)}
+            onClick={layerOperation(selectedLayers, "difference")}
           >
             Pairwise Symmetric Difference
           </ListItem>

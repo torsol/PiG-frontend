@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { SnackbarProvider } from 'notistack';
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
@@ -52,7 +53,8 @@ const App = (props) => {
   };
 
   return (
-    <div>
+    <SnackbarProvider maxSnack={3}>
+      <div>
       <Sidebar
         addLayersToState={addLayersToState(setLayers)}
         removeLayersFromState={removeLayersFromState(setLayers)}
@@ -66,6 +68,7 @@ const App = (props) => {
         handleMetaChange={handleMetaChange(setLayers)}
       />
     </div>
+    </SnackbarProvider>
   );
 };
 
