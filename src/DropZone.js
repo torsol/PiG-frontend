@@ -14,11 +14,10 @@ const baseStyle = {
   borderRadius: 4,
   borderColor: "black",
   borderStyle: "solid",
-  backgroundColor: "#e7e7e7",
-  color: "black",
+  backgroundColor: "#43a047",
+  color: "white",
   outline: "none",
   justifyContent: "space-around",
-  //transition: "border .24s ease-in-out",
   fontSize: "18px",
 };
 

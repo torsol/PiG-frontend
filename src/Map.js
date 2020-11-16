@@ -50,7 +50,7 @@ const Map = ({
       let f = initial_map.queryRenderedFeatures(e.point, {
         layers: getCurrentLayerIDs(initial_map),
       });
-      if (f.length) {
+      if (f.length && draw.getMode() !== "draw_polygon") {
         // if you have clicked a number of layers
         handleMetaChange(f.map((feature) => feature.layer.id)[0], "selected");
       }
@@ -143,10 +143,9 @@ const Map = ({
   }, [map]);
 
   useEffect(() => {
-    // eslint-disable-next-line
     if (map) handleLayerUpdate(layers, map);
-    // eslint-disable-next-line
     console.log("Map", "Layers handled");
+    // eslint-disable-next-line
   }, [layers]);
 
   return (

@@ -41,7 +41,7 @@ const Sidebar = ({
   const [bufferSelected, setBufferSelected] = useState(false);
   const [bufferValue, setBufferValue] = useState(10);
 
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
   const layerOperation = getOperationFunction(
     enqueueSnackbar,
     addLayersToState
@@ -49,6 +49,7 @@ const Sidebar = ({
 
   useEffect(() => {
     pingApi(enqueueSnackbar);
+    // eslint-disable-next-line
   }, []);
 
   const handleBufferValueChange = (event) => {

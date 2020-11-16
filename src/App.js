@@ -3,9 +3,8 @@ import { SnackbarProvider } from "notistack";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
 import { getRandomColor } from "./utils/RandomColor";
-import { pingApi } from "./utils/APIConnection";
-import { useSnackbar } from "notistack";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
+import Tutorial from "./Tutorial";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
@@ -83,6 +82,7 @@ const App = (props) => {
           handleMetaChange={handleMetaChange(setLayers)}
           draw={draw}
         />
+        <Tutorial />
       </div>
     </SnackbarProvider>
   );
