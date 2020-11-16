@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/PiG-frontend/static/js/main.675cbc01.chunk.js",
-    "main.js.map": "/PiG-frontend/static/js/main.675cbc01.chunk.js.map",
+    "main.js": "/PiG-frontend/static/js/main.3a8889d0.chunk.js",
+    "main.js.map": "/PiG-frontend/static/js/main.3a8889d0.chunk.js.map",
     "runtime-main.js": "/PiG-frontend/static/js/runtime-main.747a819b.js",
     "runtime-main.js.map": "/PiG-frontend/static/js/runtime-main.747a819b.js.map",
     "static/css/2.945747aa.chunk.css": "/PiG-frontend/static/css/2.945747aa.chunk.css",
     "static/js/2.465c6c6c.chunk.js": "/PiG-frontend/static/js/2.465c6c6c.chunk.js",
     "static/js/2.465c6c6c.chunk.js.map": "/PiG-frontend/static/js/2.465c6c6c.chunk.js.map",
     "index.html": "/PiG-frontend/index.html",
-    "precache-manifest.44e4f4a2a5e87440f0d3dc4d441d39fd.js": "/PiG-frontend/precache-manifest.44e4f4a2a5e87440f0d3dc4d441d39fd.js",
+    "precache-manifest.3a225c0501356e51555e19b1d8de907c.js": "/PiG-frontend/precache-manifest.3a225c0501356e51555e19b1d8de907c.js",
     "service-worker.js": "/PiG-frontend/service-worker.js",
     "static/css/2.945747aa.chunk.css.map": "/PiG-frontend/static/css/2.945747aa.chunk.css.map",
     "static/js/2.465c6c6c.chunk.js.LICENSE.txt": "/PiG-frontend/static/js/2.465c6c6c.chunk.js.LICENSE.txt"
@@ -17,6 +17,6 @@
     "static/js/runtime-main.747a819b.js",
     "static/css/2.945747aa.chunk.css",
     "static/js/2.465c6c6c.chunk.js",
-    "static/js/main.675cbc01.chunk.js"
+    "static/js/main.3a8889d0.chunk.js"
   ]
 }

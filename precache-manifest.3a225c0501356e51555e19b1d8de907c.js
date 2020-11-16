@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "597ffd5ff4b575534396e8da24724134",
+    "revision": "99aa9f8b2deecf6dfed237b9f0eec025",
     "url": "/PiG-frontend/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/PiG-frontend/static/js/2.465c6c6c.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "2dce15bb25ed3009f85d",
-    "url": "/PiG-frontend/static/js/main.675cbc01.chunk.js"
+    "revision": "61621fbde59c8db83b3a",
+    "url": "/PiG-frontend/static/js/main.3a8889d0.chunk.js"
   },
   {
     "revision": "5bf79ab3c5c70b9a465e",
