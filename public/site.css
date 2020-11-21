@@ -73,6 +73,12 @@
     color: white;
 }
 
+.disabledOperation {
+    display: flex;
+    align-items: center;
+    color: grey;
+}
+
 .ListItem{
 }
 

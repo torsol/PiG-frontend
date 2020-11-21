@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import DropZone from "./DropZone";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import LayerBar from "./LayerBar";
 import LayersIcon from "@material-ui/icons/Layers";
 import FunctionsIcon from "@material-ui/icons/Functions";
-import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
-import InputField from "./components/InputField";
-import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
 import { useSnackbar } from "notistack";
 import {
   calculateSplitGeoJSON,
@@ -16,47 +13,10 @@ import {
   pingApi,
 } from "./utils/APIConnection";
 
+import Operation from "./components/Operation"
+
 export const HeadLine = ({ children }) => {
   return <div className="headLine">{children}</div>;
-};
-
-export const Operation = ({ children, onClick }) => {
-  return (
-    <div className="operation" onClick={onClick}>
-      {children}
-    </div>
-  );
-};
-
-export const Operation2 = ({ onClick, name, icon, selectable }) => {
-  const [selected, setSelected] = useState(false);
-  const [value, setValue] = useState(10);
-  
-  const toggleSelect = () => {
-    return setSelected(!selected);
-  };
-
-  const closeAndExectue = (value) => {
-    onClick(value);
-    toggleSelect();
-  };
-  return !selected ? (
-    <div className="operation" onClick={selectable ? toggleSelect : onClick}>
-      <ListItem disableGutters>{name}</ListItem>
-      {icon ? icon : <ArrowForward />}
-    </div>
-  ) : (
-    <div className="operation">
-      <ListItem disableGutters>
-        <InputField
-          value={value}
-          handleChange={(e) => setValue(e.target.value)}
-        />
-      </ListItem>
-      <ClearOutlined onClick={toggleSelect} />
-      <CheckOutlined onClick={() => closeAndExectue(value)} />
-    </div>
-  );
 };
 
 const Sidebar = ({
@@ -70,21 +30,22 @@ const Sidebar = ({
   var selectedLayers = layers.filter((layer) => layer.selected);
 
   const { enqueueSnackbar } = useSnackbar();
+
   const layerOperation = getOperationFunction(
     enqueueSnackbar,
     addLayersToState
   );
 
+  const onClickBuffer = () => {
+    return (value) => {
+      layerOperation(selectedLayers, "buffer", value)();
+    };
+  };
+
   useEffect(() => {
     pingApi(enqueueSnackbar);
     // eslint-disable-next-line
   }, []);
-
-  const onClickBuffer = () => {
-    return (value) => {
-      layerOperation(selectedLayers, "buffer", value)();
-    }
-  };
 
   return (
     <div className="sidebar">
@@ -93,46 +54,55 @@ const Sidebar = ({
           <ListItem disableGutters>Operations</ListItem>
           <FunctionsIcon />
         </HeadLine>
-        <Operation2
+        <Operation
           onClick={() => {
             setDraw((draw) => draw.changeMode("draw_polygon"));
           }}
           name="Draw Polygon"
+          enabled={true}
         />
-        <Operation2
+        <Operation
           name="Buffer"
           onClick={onClickBuffer()}
           selectable={true}
+          enabled={selectedLayers.length >= 1}
         />
-        <Operation2
+        <Operation
           name="Union"
           onClick={layerOperation(selectedLayers, "union")}
+          enabled={selectedLayers.length >= 2}
         />
-        <Operation2
+        <Operation
           name="Dissolve"
           onClick={layerOperation(selectedLayers, "dissolve")}
-        ></Operation2>
+          enabled={selectedLayers.length === 1}
+        ></Operation>
 
-        <Operation2
+        <Operation
           onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
           name="Split"
+          enabled={selectedLayers.length >= 1}
         />
-        <Operation2
+        <Operation
           onClick={layerOperation(selectedLayers, "intersection")}
           name="Intersection"
+          enabled={selectedLayers.length === 2}
         />
-        <Operation2
+        <Operation
           onClick={layerOperation(selectedLayers, "bbox")}
           name="Bounding Box"
+          enabled={selectedLayers.length >= 1}
         />
-        <Operation2
+        <Operation
           onClick={layerOperation(selectedLayers, "symmetric_difference")}
           name="Symmetric Difference"
+          enabled={selectedLayers.length === 2}
         />
-        <Operation2
+        <Operation
           onClick={removeLayersFromState}
           name="Remove All Layers"
           icon={<ClearOutlinedIcon />}
+          enabled={layers.length > 0}
         />
         <ListItem disableGutters>
           <DropZone
