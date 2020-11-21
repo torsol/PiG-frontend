@@ -28,6 +28,26 @@ export const Operation = ({ children, onClick }) => {
   );
 };
 
+export const Operation2 = ({ onClick, name, icon, selectable, children }) => {
+  const [selected, setSelected] = useState(false);
+  const toggleSelect = () => {
+    return setSelected(!selected);
+  };
+  const [value, setValue] = useState(10);
+  return !selected ? (
+    <div className="operation" onClick={selectable ? toggleSelect : onClick}>
+      <ListItem disableGutters>{name}</ListItem>
+      {icon ? icon : <ArrowForward />}
+    </div>
+  ) : (
+    <React.Fragment>
+      <InputField value={value} handleChange={(e)=> setValue(e.target.value)} />
+      <ClearOutlined onClick={toggleSelect} />
+      <CheckOutlined onClick={onClick} />
+    </React.Fragment>
+  );
+};
+
 const Sidebar = ({
   addLayersToState,
   removeLayersFromState,
@@ -68,24 +88,17 @@ const Sidebar = ({
           <ListItem disableGutters>Operations</ListItem>
           <FunctionsIcon />
         </HeadLine>
-        <Operation
+        <Operation2
           onClick={() => {
             setDraw((draw) => draw.changeMode("draw_polygon"));
           }}
-        >
-          <ListItem
-            disableGutters
-          >
-            Draw Polygon
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-
+          name="Draw Polygon"
+        />
         <Operation>
           {!bufferSelected ? (
             <React.Fragment>
               <ListItem disableGutters onClick={() => setBufferSelected(true)}>
-                Featurewise Buffer
+                Buffer
               </ListItem>
               <ArrowForward />
             </React.Fragment>
@@ -100,67 +113,37 @@ const Sidebar = ({
             </React.Fragment>
           )}
         </Operation>
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={layerOperation(selectedLayers, "union")}
-          >
-            N-wise Union
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={layerOperation(selectedLayers, "dissolve")}
-          >
-            N-wise Dissolve
-          </ListItem>
-          <ArrowForward />
-        </Operation>
+        <Operation2
+          name="Union"
+          onClick={layerOperation(selectedLayers, "union")}
+        />
+        <Operation2
+          name="Dissolve"
+          onClick={layerOperation(selectedLayers, "dissolve")}
+        ></Operation2>
 
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
-          >
-            Featurewise Split
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={layerOperation(selectedLayers, "intersection")}
-          >
-            Pairwise Intersection
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={layerOperation(selectedLayers, "bbox")}
-          >
-            Featurewise Bounding Box
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-        <Operation>
-          <ListItem
-            disableGutters
-            onClick={layerOperation(selectedLayers, "symmetric_difference")}
-          >
-            Pairwise Symmetric Difference
-          </ListItem>
-          <ArrowForward />
-        </Operation>
-        <Operation>
-          <ListItem disableGutters onClick={removeLayersFromState}>
-            Remove All Layers
-          </ListItem>
-          <ClearOutlinedIcon />
-        </Operation>
+        <Operation2
+          onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
+          name="Split"
+        />
+        <Operation2
+          onClick={layerOperation(selectedLayers, "intersection")}
+          name="Intersection"
+        />
+        <Operation2
+          onClick={layerOperation(selectedLayers, "bbox")}
+          name="Bounding Box"
+        />
+        <Operation2
+          onClick={layerOperation(selectedLayers, "symmetric_difference")}
+          name="Symmetric Difference"
+        />
+        <Operation2
+          onClick={removeLayersFromState}
+          name="Remove All Layers"
+          icon={<ClearOutlinedIcon />}
+          selectable={true}
+        />
         <ListItem disableGutters>
           <DropZone
             accept="*.json"
