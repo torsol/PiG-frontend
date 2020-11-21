@@ -28,23 +28,34 @@ export const Operation = ({ children, onClick }) => {
   );
 };
 
-export const Operation2 = ({ onClick, name, icon, selectable, children }) => {
+export const Operation2 = ({ onClick, name, icon, selectable }) => {
   const [selected, setSelected] = useState(false);
+  const [value, setValue] = useState(10);
+  
   const toggleSelect = () => {
     return setSelected(!selected);
   };
-  const [value, setValue] = useState(10);
+
+  const closeAndExectue = (value) => {
+    onClick(value);
+    toggleSelect();
+  };
   return !selected ? (
     <div className="operation" onClick={selectable ? toggleSelect : onClick}>
       <ListItem disableGutters>{name}</ListItem>
       {icon ? icon : <ArrowForward />}
     </div>
   ) : (
-    <React.Fragment>
-      <InputField value={value} handleChange={(e)=> setValue(e.target.value)} />
+    <div className="operation">
+      <ListItem disableGutters>
+        <InputField
+          value={value}
+          handleChange={(e) => setValue(e.target.value)}
+        />
+      </ListItem>
       <ClearOutlined onClick={toggleSelect} />
-      <CheckOutlined onClick={onClick} />
-    </React.Fragment>
+      <CheckOutlined onClick={() => closeAndExectue(value)} />
+    </div>
   );
 };
 
@@ -58,9 +69,6 @@ const Sidebar = ({
 }) => {
   var selectedLayers = layers.filter((layer) => layer.selected);
 
-  const [bufferSelected, setBufferSelected] = useState(false);
-  const [bufferValue, setBufferValue] = useState(10);
-
   const { enqueueSnackbar } = useSnackbar();
   const layerOperation = getOperationFunction(
     enqueueSnackbar,
@@ -72,13 +80,10 @@ const Sidebar = ({
     // eslint-disable-next-line
   }, []);
 
-  const handleBufferValueChange = (event) => {
-    setBufferValue(event.target.value);
-  };
-
-  const onclickBuffer = () => {
-    layerOperation(selectedLayers, "buffer", bufferValue)();
-    setBufferSelected(false);
+  const onClickBuffer = () => {
+    return (value) => {
+      layerOperation(selectedLayers, "buffer", value)();
+    }
   };
 
   return (
@@ -94,25 +99,11 @@ const Sidebar = ({
           }}
           name="Draw Polygon"
         />
-        <Operation>
-          {!bufferSelected ? (
-            <React.Fragment>
-              <ListItem disableGutters onClick={() => setBufferSelected(true)}>
-                Buffer
-              </ListItem>
-              <ArrowForward />
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              <InputField
-                value={bufferValue}
-                handleChange={handleBufferValueChange}
-              />
-              <ClearOutlined onClick={() => setBufferSelected(false)} />
-              <CheckOutlined onClick={onclickBuffer} />
-            </React.Fragment>
-          )}
-        </Operation>
+        <Operation2
+          name="Buffer"
+          onClick={onClickBuffer()}
+          selectable={true}
+        />
         <Operation2
           name="Union"
           onClick={layerOperation(selectedLayers, "union")}
@@ -142,7 +133,6 @@ const Sidebar = ({
           onClick={removeLayersFromState}
           name="Remove All Layers"
           icon={<ClearOutlinedIcon />}
-          selectable={true}
         />
         <ListItem disableGutters>
           <DropZone
