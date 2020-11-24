@@ -1,22 +1,23 @@
 {
   "files": {
-    "main.js": "/PiG-frontend/static/js/main.3a8889d0.chunk.js",
-    "main.js.map": "/PiG-frontend/static/js/main.3a8889d0.chunk.js.map",
+    "main.js": "/PiG-frontend/static/js/main.7baf4ed5.chunk.js",
+    "main.js.map": "/PiG-frontend/static/js/main.7baf4ed5.chunk.js.map",
     "runtime-main.js": "/PiG-frontend/static/js/runtime-main.747a819b.js",
     "runtime-main.js.map": "/PiG-frontend/static/js/runtime-main.747a819b.js.map",
     "static/css/2.945747aa.chunk.css": "/PiG-frontend/static/css/2.945747aa.chunk.css",
-    "static/js/2.465c6c6c.chunk.js": "/PiG-frontend/static/js/2.465c6c6c.chunk.js",
-    "static/js/2.465c6c6c.chunk.js.map": "/PiG-frontend/static/js/2.465c6c6c.chunk.js.map",
+    "static/js/2.ed1a862d.chunk.js": "/PiG-frontend/static/js/2.ed1a862d.chunk.js",
+    "static/js/2.ed1a862d.chunk.js.map": "/PiG-frontend/static/js/2.ed1a862d.chunk.js.map",
     "index.html": "/PiG-frontend/index.html",
-    "precache-manifest.3a225c0501356e51555e19b1d8de907c.js": "/PiG-frontend/precache-manifest.3a225c0501356e51555e19b1d8de907c.js",
+    "precache-manifest.c878a9d9516c6c19402c661fb1cbe45e.js": "/PiG-frontend/precache-manifest.c878a9d9516c6c19402c661fb1cbe45e.js",
     "service-worker.js": "/PiG-frontend/service-worker.js",
     "static/css/2.945747aa.chunk.css.map": "/PiG-frontend/static/css/2.945747aa.chunk.css.map",
-    "static/js/2.465c6c6c.chunk.js.LICENSE.txt": "/PiG-frontend/static/js/2.465c6c6c.chunk.js.LICENSE.txt"
+    "static/js/2.ed1a862d.chunk.js.LICENSE.txt": "/PiG-frontend/static/js/2.ed1a862d.chunk.js.LICENSE.txt",
+    "static/media/polygon.png": "/PiG-frontend/static/media/polygon.2db8fea9.png"
   },
   "entrypoints": [
     "static/js/runtime-main.747a819b.js",
     "static/css/2.945747aa.chunk.css",
-    "static/js/2.465c6c6c.chunk.js",
-    "static/js/main.3a8889d0.chunk.js"
+    "static/js/2.ed1a862d.chunk.js",
+    "static/js/main.7baf4ed5.chunk.js"
   ]
 }
