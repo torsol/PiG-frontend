@@ -4,7 +4,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import LayerBar from "./LayerBar";
 import LayersIcon from "@material-ui/icons/Layers";
-import FunctionsIcon from "@material-ui/icons/Functions";
 import ClearOutlinedIcon from "@material-ui/icons/ClearOutlined";
 import { useSnackbar } from "notistack";
 import {
@@ -51,8 +50,7 @@ const Sidebar = ({
     <div className="sidebar">
       <List disablePadding>
         <HeadLine>
-          <ListItem disableGutters>Operations</ListItem>
-          <FunctionsIcon />
+          <ListItem disableGutters>Control Panel</ListItem>
         </HeadLine>
         <Operation
           onClick={() => {
