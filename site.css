@@ -83,6 +83,12 @@
     cursor: pointer;
 }
 
+.operationdiv {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
 .operation:hover{
     display: flex;
     align-items: center;
