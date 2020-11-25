@@ -1,0 +1,11 @@
+{
+    "draw_polygon": "Select the edges of the polygon you wish to create. Finish by clicking on the initial edge, closing the polygon.",
+    "buffer": "Select one or more layers, then press \"Buffer\". It will ask how large buffer you want, supply this quantity in meters. Click on the checkmark to calculate. ",
+    "union": "Select two or more layers, then press union. The output will be one layer, consisting of the union of the selected layers.",
+    "dissolve": "Select one layer, then press dissolve. The output will be the input features combined into one multifeature.", 
+    "split": "Select one or more layers, then press split. The output will be each of the selected features as a layer. Will NOT split a dissolved layer.",
+    "intersection": "Select two layers, then press intersection. The output will be the overlapping areas of the two layers.",
+    "bbox": "Select one or more layers, then press bbox. The output will be a layer containing the minimal bounding boxes for all features in selected layers.",
+    "symmetric_difference": "Select two layers, then press symmetric difference. The output will be a layer containing all non-overlapping areas between the layers."
+
+}

@@ -11,9 +11,9 @@ import {
   getOperationFunction,
   pingApi,
 } from "./utils/APIConnection";
-
 import Operation from "./components/Operation"
 
+var operationTexts = require('./data/operations.json');
 export const HeadLine = ({ children }) => {
   return <div className="headLine">{children}</div>;
 };
@@ -58,43 +58,51 @@ const Sidebar = ({
           }}
           name="Draw Polygon"
           enabled={true}
+          popoverText={operationTexts.draw_polygon}
         />
         <Operation
           name="Buffer"
           onClick={onClickBuffer()}
           selectable={true}
           enabled={selectedLayers.length >= 1}
+          popoverText={operationTexts.buffer}
         />
         <Operation
           name="Union"
           onClick={layerOperation(selectedLayers, "union")}
           enabled={selectedLayers.length >= 2}
+          popoverText={operationTexts.union}
         />
         <Operation
           name="Dissolve"
           onClick={layerOperation(selectedLayers, "dissolve")}
           enabled={selectedLayers.length === 1}
+          popoverText={operationTexts.dissolve}
         ></Operation>
 
         <Operation
           onClick={calculateSplitGeoJSON(addLayersToState, selectedLayers)}
           name="Split"
           enabled={selectedLayers.length >= 1}
+          popoverText={operationTexts.split}
         />
         <Operation
           onClick={layerOperation(selectedLayers, "intersection")}
           name="Intersection"
           enabled={selectedLayers.length === 2}
+          popoverText={operationTexts.intersection}
         />
         <Operation
           onClick={layerOperation(selectedLayers, "bbox")}
           name="Bounding Box"
           enabled={selectedLayers.length >= 1}
+          popoverText={operationTexts.bbox}
         />
         <Operation
           onClick={layerOperation(selectedLayers, "symmetric_difference")}
           name="Symmetric Difference"
           enabled={selectedLayers.length === 2}
+          popoverText={operationTexts.symmetric_difference}
         />
         <Operation
           onClick={removeLayersFromState}
