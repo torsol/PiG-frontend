@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { SnackbarProvider } from "notistack";
 import Sidebar from "./Sidebar";
 import Map from "./Map";
-import { getRandomColor } from "./utils/RandomColor";
+import { getRandomColor, getRandomString } from "./utils/RandomColor";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import Tutorial from "./Tutorial";
 
@@ -23,9 +23,9 @@ const App = (props) => {
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
       newValues.forEach((newValue) => {
-        newValue["id"] = operation + "_" + Math.random().toString(36).slice(2); //generates random name for the layer
+        newValue["id"] = operation + "_" + getRandomString(5); //generates random name for the layer
         newValue["name"] =
-          operation + "_" + Math.random().toString(36).slice(2);
+          operation + "_" + getRandomString(5);
         newValue["color"] = getRandomColor(); //generates random color
       });
       setLayers((layers) => [...layers, ...newValues]);

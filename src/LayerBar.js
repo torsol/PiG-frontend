@@ -21,7 +21,7 @@ const Layer = ({
   const [layerName, setLayerName] = useState(layer.name)
 
   const handleNameChange = (event) => {
-    setLayerName(event.target.value)
+    if(event.target.value.length < 19) setLayerName(event.target.value)
   }
 
 

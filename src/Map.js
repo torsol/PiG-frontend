@@ -24,7 +24,7 @@ const Map = ({
   const initializeMap = (setMap, mapContainer) => {
     const initial_map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: "mapbox://styles/mapbox/streets-v11", // stylesheet location
+      style: "mapbox://styles/torstein/ckhxghcb708qg19mtz7urlkdx", // stylesheet location"
       center: [lng, lat],
       zoom: zoom,
     });

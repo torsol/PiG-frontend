@@ -10,19 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 
-const content = [
-  {
-    title: "Welcome",
-    image: "polygon.png",
-    detailed:
-      'This is a webGis created in the course TBA4251 at NTNU. To get a quick overview of the different functionality this GIS has to offer, I have created this tutorial. You can show and hide it as you please by using the "HIDE TUTORIAL" button at the bottom. \n Follow along with the instructions, using the arrows to go forwards or backwards. Enjoy! ',
-  },
-  {
-    title: "Control Panel",
-    image: "control_panel.png",
-    detailed: "The main element of the app is the control panel in the top left corner. From this panel, you can add, remove, and manipulate layers in numerous ways. \n We will go through all the available functionality in this tutorial, but the functions themselves comes with a short tooltip if you hover over their \"question mark\" later on as well.",
-  },
-];
+var tutorialContent = require('./data/tutorial.json');
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -37,7 +25,12 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    paddingBottom: "0px"
   },
+  content: {
+    paddingTop: "0px",
+    paddingBottom: "0px"
+  }
 }));
 
 function RecipeReviewCard() {
@@ -46,7 +39,7 @@ function RecipeReviewCard() {
   const [visible, setVisibility] = useState(false);
 
   const nextStep = () => {
-    if (step + 1 < content.length) {
+    if (step + 1 < tutorialContent.length) {
       setStep(step + 1);
     }
   };
@@ -65,20 +58,20 @@ function RecipeReviewCard() {
     <Card className="tutorial">
       <CardMedia
         className={classes.media}
-        image={require("./images/" + content[step].image)}
+        image={require("./images/" + tutorialContent[step].image)}
       />
       <CardActions className={classes.actions}>
         <IconButton className={classes.backward} onClick={prevStep}>
           <ArrowForward />
         </IconButton>
-        <CardHeader title={content[step].title} titleTypographyProps={{variant:'h6' }}/>
+        <CardHeader title={tutorialContent[step].title} titleTypographyProps={{variant:'h6' }}/>
         <IconButton className={classes.forward} onClick={nextStep}>
           <ArrowForward />
         </IconButton>
       </CardActions>
-      <CardContent>
+      <CardContent className={classes.content}>
         <Typography variant="body2" color="textSecondary" component="p">
-          {content[step].detailed.split("\n").map((i, key) => {
+          {tutorialContent[step].detailed.split("\n").map((i, key) => {
             return <p key={key}>{i}</p>;
           })}
         </Typography>

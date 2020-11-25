@@ -24,7 +24,12 @@ const Operation = ({ onClick, name, icon, selectable, enabled, popoverText }) =>
     typography: {
       padding: theme.spacing(2),
       width: 200,
-      fontSize: "13px"
+      fontSize: "13px",
+      boxShadow: "0px",
+      border: "1px",
+      borderStyle: "solid",
+      borderColor: "black",
+      borderRadius: "4px"
     },
   }));
 
