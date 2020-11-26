@@ -23,7 +23,7 @@ const App = (props) => {
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
       newValues.forEach((newValue) => {
-        newValue["id"] = operation + "_" + getRandomString(5); //generates random name for the layer
+        newValue["id"] = operation + "_" + getRandomString(5); //generates random id for the layer
         newValue["name"] =
           operation + "_" + getRandomString(5);
         newValue["color"] = getRandomColor(); //generates random color

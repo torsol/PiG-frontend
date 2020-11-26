@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Welcome",
+    "image": "welcome.png",
+    "detailed": "This is a webGis created in the course TBA4251 at NTNU. To get a quick overview of the different functionality this GIS has to offer, I have created this tutorial. You can show and hide it as you please by using the \"HIDE TUTORIAL\" button at the bottom. \n Follow along with the instructions, using the arrows to go forwards or backwards. Enjoy!"
+  },
+  {
+    "title": "Control Panel",
+    "image": "control_panel.png",
+    "detailed": "The main operating element of the app is the control panel in the top left corner. From this panel, you can add, remove, and manipulate layers in numerous ways. \n We will go through all the available functionality in this tutorial."
+  },
+  {
+    "title": "Tooltip",
+    "image": "tooltip.png",
+    "detailed": "In adition to that, each function has a small tooltip that explains how to use it. Open this tooltip by clicking on the \"question mark\" accociated with each function!"
+  }
+]
