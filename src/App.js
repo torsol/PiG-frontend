@@ -28,6 +28,7 @@ const App = (props) => {
           operation + "_" + getRandomString(5);
         newValue["color"] = getRandomColor(); //generates random color
       });
+      newValues = newValues.filter(value => value["features"].length) //add layers that actually has features
       setLayers((layers) => [...layers, ...newValues]);
     };
   };
