@@ -10,10 +10,10 @@ import {
   calculateSplitGeoJSON,
   getOperationFunction,
   pingApi,
-} from "./utils/APIConnection";
-import Operation from "./components/Operation"
+} from "../utils/APIConnection";
+import Operation from "./Operation"
 
-var operationTexts = require('./data/operations.json');
+var operationTexts = require('../data/operations.json');
 export const HeadLine = ({ children }) => {
   return <div className="headLine">{children}</div>;
 };

@@ -10,7 +10,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import ArrowForward from "@material-ui/icons/ArrowForwardIosOutlined";
 
-var tutorialContent = require('./data/tutorial.json');
+var tutorialContent = require('../data/tutorial.json');
 
 const useStyles = makeStyles((theme) => ({
   media: {
@@ -58,7 +58,7 @@ function RecipeReviewCard() {
     <Card className="tutorial">
       <CardMedia
         className={classes.media}
-        image={require("./images/" + tutorialContent[step].image)}
+        image={require("../images/" + tutorialContent[step].image)}
       />
       <CardActions className={classes.actions}>
         <IconButton className={classes.backward} onClick={prevStep}>

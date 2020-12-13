@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { SnackbarProvider } from "notistack";
-import Sidebar from "./Sidebar";
-import Map from "./Map";
-import { getRandomColor, getRandomString } from "./utils/RandomColor";
+import Sidebar from "./components/Sidebar";
+import Map from "./components/Map";
+import { getRandomColor, getRandomString } from "./utils/Randomizer";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
-import Tutorial from "./Tutorial";
+import Tutorial from "./components/Tutorial";
 
 const App = (props) => {
   const [layers, setLayers] = useState([]);
