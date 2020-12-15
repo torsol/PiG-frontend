@@ -87,7 +87,7 @@ const LayerBar = ({
   handleMetaChange,
 }) => {
   return (
-    <div>
+    <div className="scroll">
       {layers &&
         layers.map((layer) => {
           return (

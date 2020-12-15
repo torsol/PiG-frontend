@@ -133,3 +133,15 @@ input[type="text" i]{
 #dropzone.hover {
     background: lawngreen;
 }
+
+.scroll{
+    overflow-y: auto; 
+    max-height:400px;
+}
+
+/**{
+    -ms-overflow-style: none;
+}
+::-webkit-scrollbar {
+    display: none;
+}**/
