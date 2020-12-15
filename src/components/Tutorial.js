@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-function RecipeReviewCard() {
+function Tutorial() {
   const classes = useStyles();
   const [step, setStep] = useState(0);
   const [visible, setVisibility] = useState(false);
@@ -91,4 +91,4 @@ function RecipeReviewCard() {
   );
 }
 
-export default RecipeReviewCard;
+export default Tutorial;
