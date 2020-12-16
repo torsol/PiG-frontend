@@ -6,9 +6,17 @@ import { getRandomColor, getRandomString } from "./utils/Randomizer";
 import MapboxDraw from "@mapbox/mapbox-gl-draw";
 import Tutorial from "./components/Tutorial";
 
-const App = (props) => {
+
+/*
+* The main component of the application, containing the state and other components. 
+*/
+const App = () => {
+
+  // The layers added to the application
   const [layers, setLayers] = useState([]);
 
+
+  // the mapbox-draw component
   const [draw, setDraw] = useState(
     new MapboxDraw({
       displayControlsDefault: false,
@@ -20,6 +28,7 @@ const App = (props) => {
     })
   );
 
+  // addLayersToState creates new layers in the state by adding id, name and color to the added geojson
   const addLayersToState = (setLayers) => {
     return (newValues, operation) => {
       newValues.forEach((newValue) => {
@@ -33,6 +42,7 @@ const App = (props) => {
     };
   };
 
+  // handelMetaChange takes in key-value pairs of metadata that needs to be changes in a lyers. 
   const handleMetaChange = (setLayers) => {
     return (layerId, key, change) => {
       !change && key === "selected"
@@ -51,12 +61,14 @@ const App = (props) => {
     };
   };
 
+  // empty the state from all layers
   const removeLayersFromState = (setLayers) => {
     return () => {
       setLayers([]);
     };
   };
 
+  // remove the layer from state that matches a given id
   const removeLayerFromState = (setLayers, layers) => {
     return (layerID) => {
       var newLayers = layers.filter((layer) => {
@@ -90,8 +102,3 @@ const App = (props) => {
 };
 
 export default App;
-
-
-
-
-

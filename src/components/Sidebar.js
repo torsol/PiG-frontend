@@ -14,10 +14,22 @@ import {
 import Operation from "./Operation"
 
 var operationTexts = require('../data/operations.json');
+
+// Simple component for the headlines in the sidebar
 export const HeadLine = ({ children }) => {
   return <div className="headLine">{children}</div>;
 };
 
+/** 
+* The sidebar component contains the operations, dropzone and layerbar
+* @param  addLayersToState - function that enables adding of layers to application state
+* @param  removeLayersFromState - function that enables removal of layers from application state
+* @param  layers - all the layers in application state
+* @param  handleMetaChange - function that allows name-, selected- and visibility-change
+* @param  setDraw - function that enables us to set the current state of the mapbox-draw functionality
+* @param  popoverText - The text that is shown when clicking the help-icon of the operation
+* @return - Returns the sidebar
+*/
 const Sidebar = ({
   addLayersToState,
   removeLayersFromState,
@@ -26,21 +38,27 @@ const Sidebar = ({
   handleMetaChange,
   setDraw,
 }) => {
+
+  // compile the list of selected layers from state
   var selectedLayers = layers.filter((layer) => layer.selected);
 
+  // enable the snackbar for notifications
   const { enqueueSnackbar } = useSnackbar();
 
+  // enable the layerOperation with snackbar and addlayerstostate-functionality
   const layerOperation = getOperationFunction(
     enqueueSnackbar,
     addLayersToState
   );
-
+  
+  // create onClick functionality 
   const onClickBuffer = () => {
     return (value) => {
       layerOperation(selectedLayers, "buffer", value)();
     };
   };
 
+  // ping the api on load in order to wake the API up. 
   useEffect(() => {
     pingApi(enqueueSnackbar);
     // eslint-disable-next-line

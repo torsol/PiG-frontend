@@ -2,12 +2,20 @@ import React, { useState, useRef, useEffect } from "react";
 import mapboxgl from "mapbox-gl";
 import "@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css";
 
+// Necessary access-token in order to use the mapbox GL library
 mapboxgl.accessToken =
   "pk.eyJ1IjoidG9yc3RlaW4iLCJhIjoiY2s3YWJkdzk3MDU1bjNncnd0dWExN292YiJ9.te0K0gwI11dUd2qZs6FQ0g";
 
+/** 
+* The map component contains all logic related to the rendered map in the client
+* @param  layers - all layers in state
+* @param  addLayersToState - Function that enables the addin of layers to state
+* @param  removeLayerFromState - Function that enables the removal of the layer from the layerbar
+* @param  handleMetaChange - function that allows name-, selected- and visibility-change
+* @return - a scrollable list of layers
+*/
 const Map = ({
   layers,
-  handleSelectedChange,
   addLayersToState,
   handleMetaChange,
   draw,
@@ -21,6 +29,8 @@ const Map = ({
   const lat = 63.43;
   const zoom = 13;
 
+
+  // function that is run on initialization, creating the map and connecting necessary map modules
   const initializeMap = (setMap, mapContainer) => {
     const initial_map = new mapboxgl.Map({
       container: mapContainer.current,
@@ -28,35 +38,36 @@ const Map = ({
       center: [lng, lat],
       zoom: zoom,
     });
-    //initial_map.on("draw.delete", updateArea);
-    //initial_map.on("draw.update", updateArea);
 
+    // onCreation is triggered when draw polygon is created, adding the polygon to state
     function onCreation(e) {
       var data = draw.getAll();
       addLayersToState([data], "drawTool");
       draw.deleteAll();
-      console.log(draw);
     }
 
+    // When map has loaded, add the map to component state, and add onCreation to action handler
     initial_map.on("load", () => {
       setMap(initial_map);
       initial_map.addControl(draw);
       initial_map.on("draw.create", onCreation);
-
       initial_map.resize();
     });
 
+    // Functionality that handles the clicking on layers on map. 
     initial_map.on("click", (e) => {
+      // f is the layers covered by the click position of the event
       let f = initial_map.queryRenderedFeatures(e.point, {
         layers: getCurrentLayerIDs(initial_map),
       });
       if (f.length && draw.getMode() !== "draw_polygon") {
-        // if you have clicked a number of layers
+        // if you have clicked a number of layers, select the top layer
         handleMetaChange(f.map((feature) => feature.layer.id)[0], "selected");
       }
     });
   };
 
+  // addLayer adds new layers to the mapbox state by creating a source and layer for each layer in state
   const addLayer = (layers) => {
     layers.forEach((layer) => {
       map.addSource(layer.id, {
@@ -79,6 +90,7 @@ const Map = ({
     });
   };
 
+  // function that removes layer from mapbox-state using the individual layer ids
   const removeLayer = (layers) => {
     layers.forEach((layerID) => {
       map.removeLayer(layerID);
@@ -86,6 +98,7 @@ const Map = ({
     });
   };
 
+  // getCurrentLayerIDs retrieves all the local mapbox-layer-ids added by the user, by filtering out the premade layers
   const getCurrentLayerIDs = (map) => {
     return map
       .getStyle()
@@ -100,6 +113,7 @@ const Map = ({
       .map((layer) => layer.id);
   };
 
+  // updateVisibility loops through all layers and changes the mapbox-layers that does not match the visibility property in state
   const updateVisibility = (layers) => {
     layers.forEach((layer) => {
       var visibility = map.getLayoutProperty(layer.id, "visibility");
@@ -108,6 +122,8 @@ const Map = ({
     });
   };
 
+  // updateSelectedOutline changes the styling of the layer when it is selected/deselected.
+  // selected layers will get a black border around them 
   const updateSelectedOutline = (layers) => {
     layers.forEach((layer) => {
       layer.selected
@@ -116,20 +132,27 @@ const Map = ({
     });
   };
 
+  // handleLayerUpdate handles all the changes related to an update in application State
   const handleLayerUpdate = (layers, map) => {
+
+    // get all mapbox-layers
     const currentLayers = getCurrentLayerIDs(map);
 
+    // get the index of mapbox-layers that has been deleted in the application State
     const removable = currentLayers.filter(function (layer) {
       //get the index for layers that have been deleted in the state
       return layers.map((layer) => layer.id).indexOf(layer) === -1;
     });
 
+    //get the index for layers that have been added to the state
     const addable = layers.filter(function (layer) {
-      //get the index for layers that have been added to the state
       return currentLayers.indexOf(layer.id) === -1;
     });
 
+    // add layers that needs to be in the mapbox-state
     if (addable[0]) addLayer(addable);
+
+    //remove layers that is no longer in application-state
     if (removable[0]) removeLayer(removable);
 
     updateVisibility(layers);
@@ -142,6 +165,8 @@ const Map = ({
     // eslint-disable-next-line
   }, [map]);
 
+
+  // useEffect is a react-hook that triggers on all layers-updates
   useEffect(() => {
     if (map) handleLayerUpdate(layers, map);
     console.log("Map", "Layers handled");

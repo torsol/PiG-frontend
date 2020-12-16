@@ -2,6 +2,8 @@ import React, { useCallback, useMemo } from "react";
 import { useDropzone } from "react-dropzone";
 import PublishIconLarge from "@material-ui/icons/Publish";
 
+
+// Used inline styles because the useDropzone component had trouble reading the css-file
 const baseStyle = {
   flex: 1,
   display: "flex",
@@ -35,7 +37,16 @@ const rejectStyle = {
   borderStyle: "solid"
 };
 
+/** 
+* This is the component that uses the useDropzone-library to create the upload-functionality to the site
+* @param  addLayersToState - This is the function passed from App that enables adding of new layers to state
+* @param  enqueueSnackbar - The enqueueSnackbar function is also passed from App, and enables the notification for successful upload
+* @return The function returns the "Upload Layers"-field in the control panel
+*/
 function Dropzone({ addLayersToState, layers, enqueueSnackbar }) {
+  /*
+    This useCallback function is triggered on acceptet files, reading them and adding them to state
+  */
   const onDropAccepted = useCallback(
     (acceptedFiles) => {
       let promises = [];
@@ -57,6 +68,9 @@ function Dropzone({ addLayersToState, layers, enqueueSnackbar }) {
     [layers]
   );
 
+    /*
+    This useCallback function is triggered on rejected files, using the snackbar to show an error
+     */
   const onDropRejected = useCallback(
     (rectedFiles) => {
         enqueueSnackbar("Error adding selected layers, try a valid geojson- or json-file", { variant: "error"})
@@ -71,8 +85,11 @@ function Dropzone({ addLayersToState, layers, enqueueSnackbar }) {
     isDragActive,
     isDragAccept,
     isDragReject,
-  } = useDropzone({ accept: [".json", ".geojson"], onDropAccepted, onDropRejected});
+  } = useDropzone({ accept: [".json", ".geojson"], onDropAccepted, onDropRejected}); // Declaring the useDropzone, specifiying geojson and json as legal file-types
 
+  /*
+    useMemo is used to toggle styling of the component, if a user is dragging a file
+     */
   const style = useMemo(
     () => ({
       ...baseStyle,
@@ -83,6 +100,9 @@ function Dropzone({ addLayersToState, layers, enqueueSnackbar }) {
     [isDragActive, isDragReject, isDragAccept]
   );
 
+  /*
+    This is using the props from the useDropzone-hook to render the component. 
+     */
   return (
     <div {...getRootProps({ style })}>
       <input {...getInputProps()} />

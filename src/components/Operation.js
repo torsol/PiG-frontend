@@ -10,16 +10,29 @@ import ListItem from "@material-ui/core/ListItem";
 import { withStyles } from "@material-ui/core/styles";
 import { Tooltip } from "@material-ui/core";
 
+// custom inline styling for the tooltip that doesnt work from regular css
 const TextOnlyTooltip = withStyles({
   tooltip: {
     fontSize: "13px",
   },
 })(Tooltip);
 
+
+/** 
+* The operation-component handles all internal state of the different operation-functionality
+* @param  onClick - Function that should be triggered when clicking an operation
+* @param  name - name of the operation
+* @param  icon - the icon for the operation
+* @param  selectable - wether the user can select the operation with the current selected layers
+* @param  enabled - wether the user can select the operation with the current selected layers
+* @param  popoverText - The text that is shown when clicking the help-icon of the operation
+* @return - a scrollable list of layers
+*/
 const Operation = ({ onClick, name, icon, selectable, enabled, popoverText }) => {
   const [selected, setSelected] = useState(false);
   const [value, setValue] = useState(10);
 
+  // custom inline styling for the tooltip that doesnt work from regular css
   const useStyles = makeStyles((theme) => ({
     typography: {
       padding: theme.spacing(2),

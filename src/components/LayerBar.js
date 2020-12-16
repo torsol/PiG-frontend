@@ -1,89 +1,17 @@
-import { ClearOutlined, CheckOutlined } from "@material-ui/icons";
-import { ListItem } from "@material-ui/core";
-import React, { useState } from "react";
-import {
-  DeleteOutline,
-  CreateOutlined,
-  VisibilityOutlined,
-  VisibilityOffOutlined,
-} from "@material-ui/icons";
-
-const InputField = ({value, handleChange}) => {
-  return <input type="text" value={value} onChange={handleChange}></input>;
-};
-
-const Layer = ({
-  layer,
-  removeLayerFromState,
-  handleMetaChange,
-}) => {
-  const [inputBox, setInputBox] = useState(false);
-  const [layerName, setLayerName] = useState(layer.name)
-
-  const handleNameChange = (event) => {
-    if(event.target.value.length < 19) setLayerName(event.target.value)
-  }
+import React from "react";
+import Layer from "./Layer";
 
 
-  return (
-    <div
-      key={layer.id}
-      className={
-        !layer.selected
-          ? "layer-item"
-          : "layer-item-selected"
-      }
-    >
-      {inputBox ? (
-        <React.Fragment>
-          <ListItem disableGutters>
-            <InputField value={layerName} handleChange={handleNameChange}/>
-          </ListItem>
-          <ClearOutlined
-            onClick={() => {
-              setLayerName(layer.name)
-              setInputBox(false);
-            }}
-          />
-          <CheckOutlined
-            onClick={() => {
-              setInputBox(false);
-              handleMetaChange(layer.id, "name", layerName)}
-            }
-          />
-        </React.Fragment>
-      ) : (
-        <React.Fragment>
-          <ListItem
-            disableGutters
-            onClick={() => {
-              handleMetaChange(layer.id, "selected", !layer.selected);
-            }}
-          >
-            {layer.name}
-          </ListItem>
-          {layer.visibility !== "none" ? (
-            <VisibilityOutlined
-              onClick={() => handleMetaChange(layer.id, "visibility", "none")}
-            />
-          ) : (
-            <VisibilityOffOutlined
-              onClick={() => handleMetaChange(layer.id, "visibility", "visible")}
-            ></VisibilityOffOutlined>
-          )}
-          <CreateOutlined onClick={() => setInputBox(true)} />
-          <DeleteOutline onClick={() => removeLayerFromState(layer.id)} />
-        </React.Fragment>
-      )}
-    </div>
-  );
-};
-
+/** 
+* This is the component creating and containing all the Layer-components
+* @param  layer - all layers in state
+* @param  removeLayerFromState - Function that enables the removal of the layer from the layerbar
+* @param  handleMetaChange - function that allows name- and visibility change
+* @return - a scrollable list of layers
+*/
 const LayerBar = ({
   layers,
   removeLayerFromState,
-  selectedLayersIndices,
-  handleSelectedChange,
   handleMetaChange,
 }) => {
   return (
@@ -95,8 +23,6 @@ const LayerBar = ({
               key={layer.id}
               layer={layer}
               removeLayerFromState={removeLayerFromState}
-              selectedLayersIndices={selectedLayersIndices}
-              handleSelectedChange={handleSelectedChange}
               handleMetaChange={handleMetaChange}
             />
           );
