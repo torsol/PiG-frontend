@@ -7,7 +7,7 @@
   {
     "title": "Control Panel",
     "image": "control_panel.png",
-    "detailed": "The main operating element of the app is the control panel in the top left corner. From this panel, you can add, remove, and manipulate layers in numerous ways. \n We will go through all the available functionality in this tutorial."
+    "detailed": "The main operating element of the app is the control panel in the top left corner. From this panel, you can add, remove, and manipulate layers in numerous ways. \n We will go through some of the available functionality in this tutorial."
   },
   {
     "title": "Tooltip",
@@ -56,13 +56,33 @@
   },
   {
     "title": "Upload files",
-    "image": "fileupload.png",
+    "image": "buildings-lerkendal.png",
     "detailed": "This tutorial assumes that you are a geomatics student. Therefore you want to live as close to the \"Lerkendalsbygget\" as possible. Luckily, you have found a file containing the lerkendalsbygg. \nTask: Download the file from the internet and upload it to the client. Name the layer \"buildings\", and find the three buildings on Gløshaugen",
     "link": "https://github.com/torsol/PiG-frontend/blob/master/tutorial_data/lerkendal.geojson" 
   },
   {
+    "title": "Split",
+    "image": "split.png",
+    "detailed": "The data that you uploaded contains more than one feature, in this case three features. We are only interested in the largest building, the \"Lerkendalsbygg\". Therefore we have to use the Split-operation on the buildings-layer to split every building into each own layer. \nTask: Select the buildings-layer and use Split. The output should be three new layers."
+  },
+  {
+    "title": "Cleanup",
+    "image": "lerkendals.png",
+    "detailed": "Now that we have isolated the buildings into each layer, we need to do some cleanup. \n Task: delete the two smallest buildings and rename the largest building to \"Lerkendalsbygget\". "
+  },
+  {
+    "title": "Buffer III",
+    "image": "lerkbuffer.png",
+    "detailed": "We want to live close to the Lerkendalsbygg, because a short distance to lectures will increase the chance of attending them. We decide that we should live no farer away than 1 kilometer.\n Task: Create a 1km buffer around Lerkendalsbygget, and name it lerkendal_1000."
+  },
+  {
+    "title": "Intersection",
+    "image": "final.png",
+    "detailed": "The final step is to find the overlapping area that is within 1000 meters of the lerkendalsbygg and within the nidaros-donut. This task is best solved by Intersection, which takes two layers and returns the overlapping areas. \n Task: Select nidaros-donut and lerkendal_1000 and use intersection. Rename the area to best_area and hide all other layers.  \n If you have done the tutorial precicely, you should end up with the area on the picture! "
+  },
+  {
     "title": "The End",
-    "image": "tooltip.png",
-    "detailed": "This is the end of the tutorial"
+    "image": "final.png",
+    "detailed": "Congratulations on finishing the tutorial! Not all operations was covered in the tutorial, but they follow the same principles. Use the tooltips and explore!"
   }
 ]
