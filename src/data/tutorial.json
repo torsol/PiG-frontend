@@ -12,6 +12,57 @@
   {
     "title": "Tooltip",
     "image": "tooltip.png",
-    "detailed": "In adition to that, each function has a small tooltip that explains how to use it. Open this tooltip by clicking on the \"question mark\" accociated with each function!"
+    "detailed": "In addition to that, each function has a small tooltip that explains how to use it. Open this tooltip by clicking on the \"question mark\" accociated with each function!"
+  },
+  {
+    "title": "Draw Polygon",
+    "image": "draw_polygons.png",
+    "detailed": "The only operation available for initial selection is the \" Draw Polygon \". This operation, when activated, allows you to select the edges of a custom polygon by clicking on the map. \nWhen you are satisfied with your polygon, click on the initial edge to finish and it will be automatically added to the layers. \n Task: Find Nidaros Cathedral, select \"Draw Polygon\" and create a circumscribing polygon like the picture. "
+  },
+  {
+    "title": "Layers",
+    "image": "layers-bar.png",
+    "detailed": "After you have finished adding the circumscribing polygon, you will notice that the polygon has shown up as a layer in the layers tab in the control panel. \n Layers are assigned a random name, with the operation used as a prefix for easier identification. \n Each layer has three buttons, these buttons are used to control visibility, change name of the layer or delete layer. \nTask: Toggle the visibility by pressing the eye-button, you should see that the polygon dissapears. Press it again to make the polygon visible again."
+  },
+  {
+    "title": "Change Name",
+    "image": "layer-change-name.png",
+    "detailed": "Our layer needs a descriptive name so that we can seperate it from other layers that will be added later on. When clicking the pencil-button, an input-field appears where you can write the new name of the layer. When finished, press the checkmark button. If you want to cancel the name-change, press the exit-button.\n Task: Change the name of the layer to \"Nidarosdomen\"."
+  },
+  {
+    "title": "Select Layer",
+    "image": "nidaros-selected.png",
+    "detailed": "In order to use the other operations in the control panel, we need to learn about selection. By clicking on a layer, either on the map or on the name of the layer in the control panel, we select it. When clicking again, we deselect it.\n Selected layers will change color-border on the map, and appear black in the layers bar. \n The different operations will be available to be used when we have selected a correct amount of layers for that operation to work. \n Task: Select the \"Nidarosdomen\" layer by clicking it on the map or in the layer-bar"
+  },
+  {
+    "title": "Buffer",
+    "image": "buffer.png",
+    "detailed": "One of the operations that becomes available for use when one layer is selected is the buffer operation. The buffer operation takes an arbitrary amount of layers, and returns a buffered area with a given distance around all the features in the layers. \n When selecting the buffer-operation, an additional input field will show up. Here you specify the distance of the buffer in meters."
+  },
+  {
+    "title": "Buffer II",
+    "image": "nidaros-buffer.png",
+    "detailed": "Your main task for this tutorial is to find a nice place to live when studying in Trondheim. \n Because your are a big fan of the Nidarosdomen, you want to live within 1km of it, but no closer than 500 meter. The first step towards your goal is to create two buffers. \n Task: create two buffers around the Nidarosdomen, one with 1km buffer and one with 500 m buffer. Name the buffers nidaros_1000 and nidaros_500"
+  },
+  {
+    "title": "Difference",
+    "image": "nidaros-symmetric.png",
+    "detailed": "Now it is time to extract the area that is relevant for our search by using symmetric difference. \n Symmetric difference takes two layers as arguments and return the non-overlapping areas. This is perfect when used on our buffers, as it will return the area we want to live in. \nTask: Select nidaros_500 and nidaros_1000 and press symmetric difference. Name the layer nidaros_donut. Deselect and hide the other layers. "
+  },
+  {
+    "title": "File Upload",
+    "image": "fileupload.png",
+    "detailed": "The next step of the tutorial involves uploading external layer-data, so we have to familiarize ourselves with the file upload. The file upload can be used by dragging files into the green area, or click on the green area to open a file explorer. When a file is added, it is read, translated to layer data and added to the map. \n NOTE: This file upload only accepts geojson and json, and will give you a warning if you try to upload other file types. \n NOTE: It supports the upload of multiple files at the time."
+  },
+  {
+    "title": "Upload files",
+    "image": "fileupload.png",
+    "detailed": "This tutorial assumes that you are a geomatics student. Therefore you want to live as close to the \"Lerkendalsbygget\" as possible. Luckily, you have found a file containing the lerkendalsbygg. \nTask: Download the file from the internet and upload it to the client. Name the layer \"buildings\", and find the three buildings on Gløshaugen",
+    "link": "https://github.com/torsol/PiG-frontend/blob/master/tutorial_data/lerkendal.geojson" 
+  },
+  {
+    "title": "The End",
+    "image": "tooltip.png",
+    "detailed": "This is the end of the tutorial"
   }
 ]

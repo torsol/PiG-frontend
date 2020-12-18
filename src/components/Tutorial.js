@@ -88,6 +88,7 @@ function Tutorial() {
           {tutorialContent[step].detailed.split("\n").map((i, key) => {
             return <p key={key}>{i}</p>;
           })}
+          {tutorialContent[step].link ? (<a href={tutorialContent[step].link}>Get file here</a>): <p/>}
         </Typography>
       </CardContent>
       <CardActions>
