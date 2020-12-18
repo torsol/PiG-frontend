@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const HOST = "http://localhost:5000/api/";
-//const HOST = "https://tba4251-api.herokuapp.com/api/"
+//const HOST = "http://localhost:5000/api/";
+const HOST = "https://tba4251-api.herokuapp.com/api/"
 
 function concatGeoJSON(list) {
   // used to combine features into one geojson for backend processing
